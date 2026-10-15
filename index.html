@@ -2,549 +2,475 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ingedás · Estudio de Electricidad</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Grupo Monolith — Análisis de consumo 2026</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --yellow: #fcdb50;
-    --gray:   #c6c5c6;
-    --black:  #101010;
-    --light:  #f8f8f8;
-    --white:  #ffffff;
-    --green:  #2ecc71;
-    --red:    #e74c3c;
+  :root{
+    --ink:#15140f; --charcoal:#1c1b16; --charcoal2:#242219; --gold:#e7b92e; --gold-deep:#b3841c;
+    --paper:#faf8f2; --paper2:#f1ecdd; --muted:#6f6c60; --line:#e4dfce; --cream:#cfcabb;
+    --up:#a8321e; --dn:#4d7a3a;
   }
-  body { font-family: 'Montserrat', sans-serif; font-weight: 300; color: var(--black); background: var(--white); line-height: 1.7; }
-
-  .cover { background: var(--yellow); min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; padding: 48px 56px; position: relative; overflow: hidden; page-break-after: always; }
-  .cover-brand { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--black); padding-bottom: 16px; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; }
-  .cover-body { margin: auto 0; }
-  .cover-eyebrow { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: #6b5c00; margin-bottom: 16px; font-weight: 500; }
-  .cover-title { font-size: clamp(56px, 9vw, 100px); font-weight: 300; letter-spacing: -2px; line-height: 1; }
-  .cover-subtitle { font-size: 26px; font-weight: 300; margin-top: 12px; color: #3a3000; }
-  .cover-client-box { background: rgba(0,0,0,0.08); border-radius: 8px; padding: 20px 28px; margin-top: 40px; display: inline-block; }
-  .cover-client-box .label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #5a4e00; margin-bottom: 4px; }
-  .cover-client-box .client-name { font-size: 22px; font-weight: 500; }
-  .cover-client-box .client-meta { font-size: 12px; color: #4a4000; margin-top: 4px; }
-  .cover-footer { border-top: 1px solid rgba(0,0,0,0.2); padding-top: 16px; display: flex; justify-content: space-between; font-size: 11px; color: #5a4e00; }
-  .cover-watermark { position: absolute; right: -30px; bottom: -20px; font-size: 220px; font-weight: 700; color: rgba(255,255,255,0.3); line-height: 1; writing-mode: vertical-rl; letter-spacing: -8px; pointer-events: none; user-select: none; }
-
-  .page { max-width: 960px; margin: 0 auto; padding: 56px 56px; }
-  .page-header { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--black); border-bottom: 1px solid var(--black); padding: 8px 0; margin-bottom: 48px; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #666; }
-  h1.page-title { font-size: 46px; font-weight: 300; line-height: 1.1; margin-bottom: 36px; }
-  h2.section-title { font-size: 24px; font-weight: 300; margin: 44px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--yellow); }
-  h3.sub { font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #555; margin: 24px 0 10px; }
-  p { font-size: 14px; color: #333; margin-bottom: 12px; }
-
-  .supply-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 24px 0; }
-  .supply-card { background: var(--light); border-radius: 8px; padding: 20px 24px; border-left: 4px solid var(--yellow); }
-  .supply-card .card-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #888; margin-bottom: 4px; }
-  .supply-card .card-value { font-size: 18px; font-weight: 500; }
-  .supply-card .card-sub { font-size: 12px; color: #666; margin-top: 2px; }
-  .cups-box { background: var(--black); color: var(--yellow); border-radius: 6px; padding: 12px 20px; font-size: 13px; font-weight: 500; letter-spacing: 1px; margin: 16px 0; display: flex; justify-content: space-between; align-items: center; }
-  .cups-box .cups-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); }
-
-  .chart-wrap { background: var(--light); border-radius: 10px; padding: 32px 28px 20px; margin: 24px 0; }
-  .chart-title { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: #888; margin-bottom: 24px; font-weight: 500; }
-  .chart-bars { display: flex; align-items: flex-end; gap: 16px; height: 180px; }
-  .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; height: 100%; justify-content: flex-end; }
-  .bar-value { font-size: 11px; font-weight: 600; color: var(--black); }
-  .bar-fill { width: 100%; border-radius: 4px 4px 0 0; background: var(--black); }
-  .bar-fill.highlight { background: var(--yellow); }
-  .bar-label { font-size: 11px; font-weight: 600; color: #888; margin-top: 8px; }
-  .bar-kwh { font-size: 10px; color: #aaa; }
-  .chart-note { font-size: 11px; color: #999; margin-top: 16px; border-top: 1px solid #e0e0e0; padding-top: 12px; }
-
-  .power-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 16px 0; }
-  .power-table th { padding: 10px 14px; text-align: center; font-weight: 600; font-size: 11px; letter-spacing: 1px; }
-  .power-table td { padding: 10px 14px; text-align: center; border: 1px solid #e0e0e0; }
-  .power-table thead tr { background: var(--black); color: var(--yellow); }
-  .power-table .row-label { font-weight: 600; text-align: left; background: var(--light); }
-  .power-table .val-contracted { color: #888; }
-
-  .comparador-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 24px 0; }
-  .comp-col { border-radius: 10px; overflow: hidden; }
-  .comp-col-header { padding: 16px 20px; font-weight: 600; font-size: 13px; letter-spacing: 0.5px; }
-  .comp-col.current .comp-col-header { background: #e8e8e8; color: #444; }
-  .comp-col.proposed .comp-col-header { background: var(--black); color: var(--yellow); }
-  .comp-col.current .comp-col-header .brand { color: #888; font-weight: 300; font-size: 11px; }
-  .comp-col.proposed .comp-col-header .brand { color: var(--gray); font-weight: 300; font-size: 11px; }
-  .comp-body { background: var(--light); }
-  .comp-section-title { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; padding: 10px 16px 4px; color: #999; font-weight: 600; }
-  .comp-row { display: grid; grid-template-columns: 36px 1fr 1fr; font-size: 12px; padding: 6px 16px; border-bottom: 1px solid #e8e8e8; align-items: center; }
-  .comp-row .period { font-weight: 600; color: #888; }
-  .comp-row .rate { color: #aaa; font-size: 11px; }
-  .comp-row .amount { text-align: right; font-weight: 500; }
-  .comp-subtotal { display: flex; justify-content: space-between; padding: 8px 16px; font-weight: 600; font-size: 12px; background: #e8e8e8; color: #333; }
-  .comp-subtotal.proposed-st { background: #1a1a1a; color: var(--yellow); }
-  .comp-extra-row { display: flex; justify-content: space-between; padding: 6px 16px; font-size: 12px; border-bottom: 1px solid #e8e8e8; color: #444; }
-  .comp-extra-row.highlight-good { color: #27ae60; font-weight: 500; }
-  .comp-total { display: flex; justify-content: space-between; padding: 14px 16px; font-weight: 700; font-size: 18px; }
-  .comp-col.current .comp-total { background: #d0d0d0; }
-  .comp-col.proposed .comp-total { background: var(--yellow); }
-
-  .ahorro-section { background: var(--black); border-radius: 12px; padding: 40px 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin: 32px 0; text-align: center; }
-  .ahorro-item { padding: 0 24px; border-right: 1px solid #333; }
-  .ahorro-item:last-child { border-right: none; }
-  .ahorro-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); margin-bottom: 8px; }
-  .ahorro-value { font-size: 38px; font-weight: 700; color: var(--yellow); line-height: 1; }
-  .ahorro-sub { font-size: 12px; color: #666; margin-top: 6px; }
-
-  .visual-compare { margin: 32px 0; }
-  .vis-row { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
-  .vis-label { width: 130px; font-size: 12px; font-weight: 600; text-align: right; color: #555; flex-shrink: 0; }
-  .vis-bar-wrap { flex: 1; background: #eee; border-radius: 6px; height: 36px; overflow: hidden; }
-  .vis-bar { height: 100%; border-radius: 6px; display: flex; align-items: center; padding-left: 14px; font-size: 14px; font-weight: 600; color: white; min-width: 80px; }
-  .vis-bar.current-bar { background: #888; }
-  .vis-bar.fijo-bar { background: #555; }
-  .vis-bar.proposed-bar { background: var(--black); color: var(--yellow); }
-  .vis-saving-pill { background: var(--yellow); color: var(--black); border-radius: 20px; padding: 4px 14px; font-size: 12px; font-weight: 700; flex-shrink: 0; min-width: 60px; text-align:center; }
-
-  .callout { border: 1px solid var(--yellow); border-left: 4px solid var(--yellow); background: #fffde8; padding: 16px 20px; border-radius: 6px; margin: 20px 0; font-size: 13px; display: flex; gap: 12px; align-items: flex-start; }
-  .callout p { margin: 0; }
-  .callout.note { border-color: #ccc; border-left-color: #999; background: #f4f4f4; }
-
-  .steps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
-  .step-card { background: var(--light); border-radius: 8px; padding: 20px; display: flex; gap: 14px; align-items: flex-start; }
-  .step-num { background: var(--yellow); width: 32px; height: 32px; min-width: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; }
-  .step-text strong { font-size: 13px; display: block; margin-bottom: 3px; }
-  .step-text span { font-size: 12px; color: #666; }
-
-  footer { background: var(--black); color: var(--gray); padding: 32px 56px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
-  footer .brand { color: var(--yellow); font-weight: 500; letter-spacing: 1px; }
-  footer .validity { text-align: right; }
-  hr.divider { border: none; border-top: 1px solid #eee; margin: 32px 0; }
-
-  @media print { .cover { page-break-after: always; min-height: 100vh; } .page { page-break-inside: avoid; } }
-
-  @media (max-width: 640px) {
-    .cover { padding: 28px 24px; min-height: 100svh; }
-    .cover-title { font-size: 52px; letter-spacing: -1px; }
-    .cover-subtitle { font-size: 18px; }
-    .cover-client-box { padding: 14px 18px; margin-top: 28px; }
-    .cover-client-box .client-name { font-size: 18px; }
-    .cover-watermark { font-size: 130px; right: -16px; bottom: -10px; }
-    .page { padding: 32px 20px; }
-    .page-header { font-size: 9px; letter-spacing: 1px; margin-bottom: 28px; }
-    h1.page-title { font-size: 32px; margin-bottom: 24px; }
-    h2.section-title { font-size: 18px; margin: 28px 0 12px; }
-    .cups-box { flex-direction: column; align-items: flex-start; gap: 6px; font-size: 12px; padding: 10px 14px; }
-    .supply-grid { grid-template-columns: 1fr; gap: 12px; margin: 16px 0; }
-    .supply-card { padding: 14px 16px; }
-    .supply-card .card-value { font-size: 16px; }
-    .chart-wrap { padding: 20px 16px 14px; }
-    .chart-bars { height: 120px; gap: 8px; }
-    .bar-value { font-size: 9px; } .bar-label { font-size: 9px; } .bar-kwh { font-size: 8px; }
-    .power-table { font-size: 11px; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    .power-table th, .power-table td { padding: 7px 8px; white-space: nowrap; }
-    .comparador-grid { grid-template-columns: 1fr; gap: 16px; }
-    .comp-col-header { font-size: 12px; padding: 12px 14px; }
-    .comp-row { font-size: 11px; padding: 5px 12px; grid-template-columns: 30px 1fr auto; }
-    .comp-row .rate { font-size: 10px; }
-    .comp-extra-row { font-size: 11px; padding: 5px 12px; }
-    .comp-subtotal { font-size: 11px; padding: 6px 12px; }
-    .comp-total { font-size: 15px; padding: 10px 12px; }
-    .comp-section-title { padding: 8px 12px 3px; }
-    .ahorro-section { grid-template-columns: 1fr; padding: 28px 24px; gap: 20px; }
-    .ahorro-item { border-right: none; border-bottom: 1px solid #333; padding: 0 0 20px; }
-    .ahorro-item:last-child { border-bottom: none; padding-bottom: 0; }
-    .ahorro-value { font-size: 32px; }
-    .visual-compare { margin: 20px 0; }
-    .vis-row { gap: 10px; margin-bottom: 10px; }
-    .vis-label { width: 90px; font-size: 10px; }
-    .vis-bar { font-size: 11px; padding-left: 10px; min-width: 60px; }
-    .vis-bar-wrap { height: 30px; }
-    .vis-saving-pill { font-size: 10px; padding: 3px 8px; }
-    .steps-grid { grid-template-columns: 1fr; gap: 10px; }
-    .step-card { padding: 14px; }
-    .callout { font-size: 12px; padding: 12px 14px; }
-    footer { flex-direction: column; gap: 16px; padding: 24px 20px; text-align: center; }
-    footer .validity { text-align: center; }
-    p { font-size: 13px; }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){ --paper:#faf8f2; --ink:#15140f; --line:#e4dfce; --muted:#6f6c60; }
   }
+  :root[data-theme="dark"]{ --paper:#faf8f2; }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; scroll-padding-top:env(safe-area-inset-top,0px); }
+  body{ margin:0; background:var(--paper); color:var(--ink);
+    font-family:'Poppins', -apple-system, 'Segoe UI', Roboto, sans-serif; font-weight:300;
+    padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+    -webkit-font-smoothing:antialiased; }
+  img,svg{ max-width:100%; }
+  .wrap{ max-width:920px; margin:0 auto; padding:0 24px; }
+  @media (max-width:640px){ .wrap{ padding:0 18px; } }
+  section{ position:relative; }
+  .light{ background:var(--paper); color:var(--ink); }
+  .dark{ background:var(--charcoal); color:var(--cream); }
+  .pad{ padding:64px 0; }
+  @media (max-width:640px){ .pad{ padding:44px 0; } }
+  .kicker{ font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--gold-deep); font-weight:600; }
+  .dark .kicker{ color:var(--gold); }
+  h1.section{ font-size:clamp(1.6rem,4vw,2.05rem); font-weight:600; line-height:1.18; margin:.5rem 0 0; }
+  h1.section .no{ color:var(--gold-deep); }
+  .dark h1.section .no{ color:var(--gold); }
+  h3{ font-size:1rem; font-weight:600; margin:34px 0 10px; }
+  p{ font-size:.98rem; line-height:1.68; color:#3a382f; font-weight:300; margin:0; }
+  .dark p{ color:var(--cream); }
+  .lede{ font-size:1.18rem; line-height:1.58; font-weight:300; color:var(--ink); max-width:640px; margin-top:22px; }
+  .dark .lede{ color:#f2efe5; }
+  a{ color:inherit; }
+  .backtop{ display:inline-block; margin-top:22px; font-size:.78rem; color:var(--gold-deep); text-decoration:none; letter-spacing:.04em; }
+  .dark .backtop{ color:var(--gold); }
+  .hl{ text-decoration:underline; text-decoration-color:var(--gold-deep); text-decoration-thickness:1.5px; text-underline-offset:3px; font-weight:500; }
+  .dark .hl{ text-decoration-color:var(--gold); }
+
+  /* HERO */
+  .hero{ background:var(--charcoal); min-height:min(92vh,760px); display:flex; align-items:stretch; overflow:hidden; }
+  .hero-inner{ position:relative; width:100%; display:flex; }
+  .hero-art{ position:absolute; inset:0; width:100%; height:100%; z-index:0; }
+  .hero-band{ position:relative; z-index:1; margin-left:clamp(24px,12vw,140px); width:min(360px,72vw);
+    background:var(--gold); padding:44px 28px 34px; display:flex; flex-direction:column; min-height:min(80vh,640px); }
+  .hero-eyebrow{ font-size:.72rem; letter-spacing:.14em; color:var(--ink); font-weight:600; }
+  .hero h1{ font-size:clamp(2rem,6vw,2.7rem); font-weight:700; color:var(--ink); line-height:1.06; margin:26px 0 0; letter-spacing:-.01em; }
+  .hero .sub{ margin-top:20px; font-size:1.02rem; line-height:1.55; color:#2a2410; font-weight:500; }
+  .hero-meta{ margin-top:auto; padding-top:28px; border-top:1px solid rgba(21,20,15,.25); }
+  .hero-meta .d{ font-size:.85rem; color:#2a2410; font-weight:500; }
+  .hero-meta .b{ margin-top:6px; font-size:.72rem; color:#4a3f14; letter-spacing:.1em; line-height:1.6; }
+
+  /* TOC */
+  .toc-grid{ display:flex; gap:48px; flex-wrap:wrap; margin-top:34px; }
+  .toc-box{ flex:1 1 360px; }
+  ol.toc{ list-style:none; margin:0; padding:0; border-top:1px solid #37352a; }
+  ol.toc li a{ display:flex; align-items:baseline; gap:14px; padding:13px 2px; text-decoration:none; border-bottom:1px solid #37352a; font-size:.98rem; color:var(--cream); transition:opacity .15s; }
+  ol.toc li a:hover{ opacity:.7; }
+  ol.toc li b{ color:var(--gold); font-weight:600; font-size:.85rem; flex-shrink:0; }
+  .toc-stat{ flex:1 1 260px; padding-top:6px; }
+  .toc-stat .num{ font-size:clamp(2.6rem,7vw,3.4rem); font-weight:700; color:var(--gold); line-height:1; }
+  .toc-stat .unit{ font-size:.95rem; color:var(--cream); margin-top:10px; max-width:320px; line-height:1.5; }
+  .toc-stat .rule2{ width:40px; height:2px; background:var(--gold); margin:18px 0; }
+  .toc-stat .delta{ font-size:.8rem; color:#a09c8c; line-height:1.6; }
+
+  /* fichas */
+  .ficha{ display:flex; flex-wrap:wrap; gap:14px 30px; margin-top:34px; padding-top:22px; border-top:1px solid #37352a; }
+  .ficha div{ flex:1 1 200px; font-size:.86rem; color:#efece2; line-height:1.5; }
+  .ficha span{ display:block; font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; color:#a09c8c; margin-bottom:3px; }
+
+  /* cards */
+  .cards{ display:flex; flex-wrap:wrap; gap:22px 28px; margin-top:36px; }
+  .card{ flex:1 1 160px; border-top:2px solid var(--gold); padding-top:14px; }
+  .card .n{ font-size:1.55rem; font-weight:700; }
+  .card .l{ font-size:.72rem; color:var(--muted); margin-top:6px; text-transform:uppercase; letter-spacing:.06em; }
+  .card .d{ font-size:.76rem; color:var(--gold-deep); margin-top:6px; font-weight:500; }
+  .bullets{ margin-top:30px; border-top:1px solid var(--line); }
+  .bullets .row{ display:flex; gap:14px; padding:13px 0; border-bottom:1px solid var(--line); }
+  .bullets .mk{ color:var(--gold-deep); font-weight:700; flex-shrink:0; }
+  .bullets .tx{ font-size:.94rem; line-height:1.55; color:#3a382f; }
+  .twocol{ display:flex; flex-wrap:wrap; gap:40px; margin-top:8px; align-items:flex-start; }
+  .twocol .col{ flex:1 1 300px; min-width:0; }
+  .legend{ font-size:.75rem; color:var(--muted); line-height:2; margin-top:14px; }
+  .legend span.sw{ display:inline-block; width:9px; height:9px; margin-right:6px; border-radius:1px; }
+  .legend .it{ margin-right:18px; white-space:nowrap; }
+  .chart-title{ font-size:.82rem; color:var(--muted); font-weight:500; margin:30px 0 6px; letter-spacing:.01em; }
+  .ax{ font:10px Poppins,sans-serif; fill:#8a8676; } .dl{ font:600 10px Poppins,sans-serif; } .lb{ font:500 10.5px Poppins,sans-serif; fill:#15140f; }
+
+  /* tablas */
+  .tbl{ overflow-x:auto; margin-top:22px; }
+  table{ width:100%; border-collapse:collapse; font-size:.84rem; min-width:560px; }
+  th{ text-align:right; font-weight:600; font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); padding:10px 8px; border-bottom:2px solid var(--gold); }
+  td{ text-align:right; padding:9px 8px; border-bottom:1px solid var(--line); font-variant-numeric:tabular-nums; color:#3a382f; }
+  th:first-child, td:first-child{ text-align:left; }
+  tr.tot td{ font-weight:600; color:var(--ink); border-top:1px solid var(--ink); background:var(--paper2); }
+  table.sm{ font-size:.76rem; min-width:760px; } table.sm td, table.sm th{ padding:7px 6px; }
+  table.sm td.l, table.sm th.l{ text-align:left; }
+  .up{ color:var(--up); font-weight:500; } .dn{ color:var(--dn); font-weight:500; }
+  .note{ font-size:.74rem; color:var(--muted); line-height:1.6; margin-top:10px; }
+
+  /* callouts */
+  .callout{ margin-top:30px; padding:18px 20px; border-left:3px solid var(--gold-deep); background:var(--paper2); font-size:.95rem; line-height:1.6; color:#3a382f; }
+  .light.alt .callout{ background:var(--paper); }
+  .dark .headlines{ margin-top:26px; }
+  .headlines .h{ font-size:.92rem; color:#efece2; line-height:1.55; padding:10px 0 10px 16px; border-left:2px solid var(--gold); margin-bottom:10px; }
+
+  .bigstats{ margin-top:30px; border-top:1px solid #34321f; }
+  .bigstats .row{ display:flex; flex-wrap:wrap; align-items:center; gap:14px 26px; padding:26px 0; border-bottom:1px solid #34321f; }
+  .bigstats .num{ font-size:1.9rem; font-weight:700; color:var(--gold); width:170px; flex-shrink:0; line-height:1; }
+  .bigstats .desc{ font-size:.92rem; color:var(--cream); line-height:1.55; max-width:460px; flex:1 1 220px; }
+
+  .watch-list{ margin-top:30px; border-top:1px solid var(--line); }
+  .watch-item{ display:flex; gap:18px; padding:18px 0; border-bottom:1px solid var(--line); }
+  .watch-no{ font-size:1.3rem; font-weight:700; color:var(--gold-deep); width:34px; flex-shrink:0; line-height:1.2; }
+  .watch-tx{ font-size:.92rem; line-height:1.6; color:#3a382f; }
+  .watch-tx b{ font-weight:600; color:var(--ink); display:block; margin-bottom:3px; font-size:.98rem; }
+
+  .backband{ background:var(--charcoal); padding:46px 0; }
+  .backband .inner{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
+  .backband .bg{ font-size:1.3rem; font-weight:700; color:var(--gold); letter-spacing:.02em; }
+  .backband .bt{ font-size:.82rem; color:var(--cream); line-height:1.5; text-align:right; }
+  @media (max-width:640px){
+    .bigstats .num{ width:auto; }
+    .hero-band{ width:min(320px,78vw); padding:36px 22px 30px; }
+    .backband .bt{ text-align:left; }
+  }
+  @media print{ .backtop{ display:none; } .pad{ padding:40px 0; } section,header{ break-inside:avoid-page; } .hero{ min-height:0; height:260mm; } }
+  @media print{ .tbl{ overflow:visible; } table, table.sm{ min-width:0 !important; } table.sm{ font-size:.66rem; } table.sm td, table.sm th{ padding:5px 3px; } table.sm td.l, table.sm td{ white-space:nowrap; } section.pad{ break-inside:auto; } tr{ break-inside:avoid; } .chart-title, h3{ break-after:avoid; } svg{ break-inside:avoid; } }
+  @media print{ section.dark.pad{ break-inside:avoid-page; } .hero{ break-after:page; } }
+
+@media print{ #incremento,#invierno,#recomendaciones{ break-before:page; } #prevision.pad{ padding:26px 0; } #prevision .bigstats .row{ padding:16px 0; } }
 </style>
 </head>
 <body>
 
-<!-- ══════ COVER ══════ -->
-<div class="cover">
-  <div class="cover-brand">
-    <span>Ingedás</span>
-    <span>Estudio de Electricidad · 2026</span>
-  </div>
-  <div class="cover-body">
-    <div class="cover-eyebrow">Propuesta de optimización energética</div>
-    <div class="cover-title">Estudio<br>Eléctrico</div>
-    <div class="cover-subtitle">Análisis · Comparativa · Ahorro</div>
-    <div class="cover-client-box">
-      <div class="label">Cliente</div>
-      <div class="client-name">Monolith Alimentación España Norte, S.L.</div>
-      <div class="client-meta">CIF B55613707 · Llorenç del Penedès, Tarragona · Tarifa 3.0TD</div>
-    </div>
-  </div>
-  <div class="cover-footer">
-    <div>Fecha de emisión: 15 de julio de 2026</div>
-    <div>Válido hasta: 31 de julio de 2026</div>
-  </div>
-  <div class="cover-watermark">ingedás</div>
-</div>
-
-<!-- ══════ DATOS SUMINISTRO ══════ -->
-<div class="page">
-  <div class="page-header">
-    <span>Ingedás · Estudio de Electricidad</span>
-    <span>Datos del Suministro</span>
-  </div>
-  <h1 class="page-title">Datos del<br>Suministro</h1>
-
-  <div class="cups-box">
-    <div>
-      <div class="cups-label">CUPS del punto de suministro</div>
-      ES0031408113573001CC
-    </div>
-    <div style="font-size:11px;color:var(--gray);">[Comercializadora actual]</div>
-  </div>
-
-  <div class="supply-grid">
-    <div class="supply-card">
-      <div class="card-label">Empresa</div>
-      <div class="card-value">Monolith Alimentación España Norte, S.L.</div>
-      <div class="card-sub">Calle Barcelona, 10 Loc · 43712 Llorenç del Penedès (Tarragona)</div>
-    </div>
-    <div class="supply-card">
-      <div class="card-label">Consumo Anual</div>
-      <div class="card-value">158.548 kWh</div>
-      <div class="card-sub">Distribuido en 6 periodos horarios · Tarifa 3.0TD</div>
-    </div>
-    <div class="supply-card">
-      <div class="card-label">Tarifa Actual</div>
-      <div class="card-value">3.0TD</div>
-      <div class="card-sub">Tarifa con discriminación horaria en 6 periodos</div>
-    </div>
-    <div class="supply-card">
-      <div class="card-label">Potencia Contratada</div>
-      <div class="card-value">43,6 kW</div>
-      <div class="card-sub">Igual en los 6 periodos</div>
-    </div>
-  </div>
-
-  <h2 class="section-title">Perfil de Consumo Anual</h2>
-
-  <div class="chart-wrap">
-    <div class="chart-title">Distribución de consumo por periodo (kWh · consumo anual)</div>
-    <div class="chart-bars">
-      <div class="bar-col">
-        <div class="bar-value">15.538</div>
-        <div class="bar-fill" style="height:38px;"></div>
-        <div class="bar-label">P1</div><div class="bar-kwh">Punta</div>
-      </div>
-      <div class="bar-col">
-        <div class="bar-value">18.625</div>
-        <div class="bar-fill" style="height:45px;"></div>
-        <div class="bar-label">P2</div><div class="bar-kwh">Llano</div>
-      </div>
-      <div class="bar-col">
-        <div class="bar-value">18.794</div>
-        <div class="bar-fill" style="height:45px;"></div>
-        <div class="bar-label">P3</div><div class="bar-kwh">Llano</div>
-      </div>
-      <div class="bar-col">
-        <div class="bar-value">22.251</div>
-        <div class="bar-fill" style="height:54px;"></div>
-        <div class="bar-label">P4</div><div class="bar-kwh">Llano</div>
-      </div>
-      <div class="bar-col">
-        <div class="bar-value">8.809</div>
-        <div class="bar-fill" style="height:21px;"></div>
-        <div class="bar-label">P5</div><div class="bar-kwh">Valle</div>
-      </div>
-      <div class="bar-col">
-        <div class="bar-value" style="font-weight:700;">74.531</div>
-        <div class="bar-fill highlight" style="height:180px;"></div>
-        <div class="bar-label">P6</div><div class="bar-kwh">Valle</div>
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="hero-inner">
+    <svg class="hero-art" viewBox="0 0 800 760" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect width="800" height="760" fill="#141310"/>
+      <g opacity="0.9">
+        <rect x="20" y="360" width="90" height="400" fill="#211f17"/><rect x="120" y="260" width="115" height="500" fill="#1a190f"/>
+        <rect x="250" y="420" width="80" height="340" fill="#242217"/><rect x="335" y="190" width="130" height="570" fill="#181712"/>
+        <rect x="475" y="340" width="98" height="420" fill="#201e15"/><rect x="585" y="390" width="75" height="370" fill="#1c1b13"/>
+        <rect x="670" y="300" width="105" height="460" fill="#1f1d14"/>
+      </g>
+      <g stroke="#3a361f" stroke-width="1">
+        <line x1="0" y1="260" x2="800" y2="560"/><line x1="0" y1="380" x2="800" y2="680"/>
+        <line x1="120" y1="760" x2="500" y2="160"/><line x1="320" y1="760" x2="700" y2="220"/>
+      </g>
+      <g fill="#e7b92e" opacity="0.7">
+        <rect x="44" y="400" width="6" height="8"/><rect x="60" y="440" width="6" height="8"/><rect x="150" y="310" width="6" height="8"/>
+        <rect x="176" y="360" width="6" height="8"/><rect x="368" y="240" width="6" height="8"/><rect x="400" y="300" width="6" height="8"/>
+        <rect x="430" y="380" width="6" height="8"/><rect x="505" y="410" width="6" height="8"/><rect x="612" y="450" width="6" height="8"/><rect x="700" y="360" width="6" height="8"/>
+      </g>
+    </svg>
+    <div class="hero-band">
+      <div class="hero-eyebrow">INGEDÁS — ANÁLISIS DE CLIENTE</div>
+      <h1>GRUPO<br>MONOLITH<br>2026</h1>
+      <div class="sub">Pagan un 22 % más por cada kWh que hace un año, con un consumo casi igual. Todo el salto está en julio y agosto, y el precio fijo de Apolo es lo que frena lo que viene.</div>
+      <div class="hero-meta">
+        <div class="d">15 de octubre de 2026 · 33 suministros · mayo–agosto 2025 vs 2026</div>
+        <div class="b">INGEDÁS · SERVICIOS INGEDÁS S.L.</div>
       </div>
     </div>
-    <div class="chart-note">
-      El <strong>47,0% del consumo se concentra en P6</strong> (Valle nocturno), donde la propuesta de Ingedás reduce el precio de 0,1160 a 0,0985 €/kWh (−15%), generando el mayor tramo de ahorro. En P1 y P2 la propuesta queda por encima del precio actual, lo que limita el ahorro global.
-    </div>
   </div>
+</header>
 
-  <h2 class="section-title">Potencia Contratada</h2>
-
-  <table class="power-table">
-    <thead>
-      <tr>
-        <th style="text-align:left;">Periodo</th>
-        <th>P1</th><th>P2</th><th>P3</th><th>P4</th><th>P5</th><th>P6</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="row-label">Potencia Contratada (kW)</td>
-        <td class="val-contracted">43,6</td><td class="val-contracted">43,6</td><td class="val-contracted">43,6</td>
-        <td class="val-contracted">43,6</td><td class="val-contracted">43,6</td><td class="val-contracted">43,6</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div class="callout note">
-    <div style="font-size:18px;">ℹ️</div>
-    <div>
-      <strong>Verificación de excesos de potencia pendiente.</strong><br>
-      No se han aportado registros de demanda real por periodo. Recomendamos revisar los maxímetros de las últimas facturas antes de firmar, para confirmar que no hay excesos de potencia (cargo independiente del comercializador que aplica igual en cualquier oferta).
-    </div>
-  </div>
-</div>
-
-<!-- ══════ COMPARATIVA 1: ACTUAL vs PROPUESTA ══════ -->
-<div class="page">
-  <div class="page-header">
-    <span>Ingedás · Estudio de Electricidad</span>
-    <span>Comparativa 1 · Actual</span>
-  </div>
-  <h1 class="page-title">Comparativa 1<br>Actual vs. Propuesta</h1>
-
-  <p>Comparativa frente al <strong>precio medio pagado entre junio 2025 y junio 2026</strong> (158.548 kWh/año · 43,6 kW contratados, 365 días). Potencia calculada con peajes BOE vigentes (pendiente de confirmar si el precio real de potencia de este periodo coincidía con el BOE).</p>
-
-  <div class="comparador-grid">
-    <div class="comp-col current">
-      <div class="comp-col-header">
-        Actual (jun 2025 – jun 2026)
-        <div class="brand">Precio medio del periodo</div>
+<!-- ÍNDICE -->
+<section class="dark pad">
+  <div class="wrap">
+    <div class="toc-grid">
+      <div class="toc-box">
+        <h1 class="section" style="color:#fff; font-size:1.5rem; margin-bottom:18px;">Índice</h1>
+        <ol class="toc">
+          <li><a href="#resumen"><b>01</b><span>Resumen ejecutivo</span></a></li>
+          <li><a href="#evolucion"><b>02</b><span>Evolución mensual: julio y agosto lo explican todo</span></a></li>
+          <li><a href="#curva"><b>03</b><span>La curva frente al mercado: casi la mitad en P6</span></a></li>
+          <li><a href="#prevision"><b>04</b><span>Qué viene: septiembre–diciembre</span></a></li>
+          <li><a href="#incremento"><b>05</b><span>Mini Mix: cuánto subiría un fijo hoy</span></a></li>
+          <li><a href="#invierno"><b>06</b><span>El invierno mes a mes: fijo contra indexado</span></a></li>
+          <li><a href="#escenarios"><b>07</b><span>Fijo o indexado: tres escenarios hasta septiembre de 2027</span></a></li>
+          <li><a href="#recomendaciones"><b>08</b><span>Recomendaciones</span></a></li>
+        </ol>
       </div>
-      <div class="comp-body">
-        <div class="comp-section-title">Término de Potencia · 365 días · 43,6 kW</div>
-        <div class="comp-row"><span class="period">Tp1</span><span class="rate">0,055827 €/kW·día</span><span class="amount">888,43 €</span></div>
-        <div class="comp-row"><span class="period">Tp2</span><span class="rate">0,029089 €/kW·día</span><span class="amount">462,92 €</span></div>
-        <div class="comp-row"><span class="period">Tp3</span><span class="rate">0,012278 €/kW·día</span><span class="amount">195,39 €</span></div>
-        <div class="comp-row"><span class="period">Tp4</span><span class="rate">0,010647 €/kW·día</span><span class="amount">169,44 €</span></div>
-        <div class="comp-row"><span class="period">Tp5</span><span class="rate">0,006887 €/kW·día</span><span class="amount">109,60 €</span></div>
-        <div class="comp-row"><span class="period">Tp6</span><span class="rate">0,003951 €/kW·día</span><span class="amount">62,88 €</span></div>
-        <div class="comp-subtotal"><span>Subtotal Potencia</span><span>1.888,66 €</span></div>
-        <div class="comp-section-title">Término de Energía</div>
-        <div class="comp-row"><span class="period">Te1</span><span class="rate">15.538 kWh · 0,1330</span><span class="amount">2.066,55 €</span></div>
-        <div class="comp-row"><span class="period">Te2</span><span class="rate">18.625 kWh · 0,1240</span><span class="amount">2.309,50 €</span></div>
-        <div class="comp-row"><span class="period">Te3</span><span class="rate">18.794 kWh · 0,1210</span><span class="amount">2.274,07 €</span></div>
-        <div class="comp-row"><span class="period">Te4</span><span class="rate">22.251 kWh · 0,1150</span><span class="amount">2.558,87 €</span></div>
-        <div class="comp-row"><span class="period">Te5</span><span class="rate">8.809 kWh · 0,1070</span><span class="amount">942,56 €</span></div>
-        <div class="comp-row"><span class="period">Te6</span><span class="rate">74.531 kWh · 0,1160</span><span class="amount">8.645,60 €</span></div>
-        <div class="comp-subtotal"><span>Subtotal Energía</span><span>18.797,15 €</span></div>
-        <div class="comp-section-title">Otros conceptos</div>
-        <div class="comp-extra-row"><span style="font-weight:600;">Base Imponible</span><span style="font-weight:600;">20.685,81 €</span></div>
-        <div class="comp-extra-row"><span>IEE (5,1127%)</span><span>1.057,60 €</span></div>
-        <div class="comp-extra-row"><span>IVA (21%)</span><span>4.566,12 €</span></div>
+      <div class="toc-stat">
+        <div class="num">+16.212 €</div>
+        <div class="unit">más pagado de mayo a agosto de 2026 que en los mismos meses de 2025 (IVA incluido)</div>
+        <div class="rule2"></div>
+        <div class="delta">+26,3 % en importe con un consumo +3,7 % (327.380 → 339.422 kWh) · 61.627 € → 77.838 € en 48 facturas comparables de 21 suministros 3.0TD</div>
       </div>
-      <div class="comp-total"><span>Total Anual</span><span>26.309,53 €</span></div>
+    </div>
+    <div class="ficha">
+      <div><span>Grupo</span>Grupo Monolith · 33 suministros en 8 titulares</div>
+      <div><span>Sociedades</span>Monolith Alimentación España · Monolith Norte · Monolith Sur · Kuzbass 2011 · Mini Mix · tres particulares</div>
+      <div><span>Tarifa · potencia</span>21 en 3.0TD (15–43,6 kW) y 12 en 2.0TD (1–13,9 kW)</div>
+      <div><span>Gasto anual estimado</span>≈ 336.000 € con IVA · 1,67 GWh</div>
+      <div><span>Comercializadora</span>Apolo Energía desde el 16/07/2026 (3.0TD) · Gaolania en 2.0TD</div>
+      <div><span>Contratos vigentes</span>19 a precio fijo hasta 16/07/2027 · 2 indexados desde 11/09/2026 · 12 en 2.0TD vencidos en septiembre</div>
+    </div>
+  </div>
+</section>
+
+<!-- 01 RESUMEN -->
+<section class="light pad" id="resumen">
+  <div class="wrap">
+    <div class="kicker">Grupo Monolith · 15 de octubre de 2026</div>
+    <h1 class="section"><span class="no">01 —</span> Resumen ejecutivo</h1>
+    <p class="lede">
+      El grupo no consume mucho más: consume un <span class="hl">3,7 % más</span>. Lo que ha cambiado es el precio, que ha pasado de
+      0,188 a 0,229 €/kWh con IVA, y <span class="hl">tres cuartas partes de ese efecto están en julio</span>. Desde el 16 de julio los 21
+      suministros en 3.0TD están con Apolo: 19 a precio fijo hasta julio de 2027, así que este invierno no se llevan toda la subida del
+      mercado, y 2 de Mini Mix indexados, que sí la pagan.
+    </p>
+    <div class="cards">
+      <div class="card"><div class="n">+16.212 €</div><div class="l">Mayo–agosto 2026 vs 2025</div><div class="d">+26,3 % con IVA · consumo +3,7 %</div></div>
+      <div class="card"><div class="n">+21,8 %</div><div class="l">Precio medio por kWh</div><div class="d">0,188 → 0,229 €/kWh con IVA</div></div>
+      <div class="card"><div class="n">≈ 336.000 €</div><div class="l">Gasto anual del grupo</div><div class="d">1,67 GWh · estimación con IVA</div></div>
+      <div class="card"><div class="n">≈ +19.100 €</div><div class="l">Septiembre–diciembre</div><div class="d">+21 % con el fijo de Apolo · +46.000 € si fuera indexado</div></div>
+    </div>
+    <div class="bullets">
+      <div class="row"><div class="mk">—</div><div class="tx"><span class="hl">Julio</span> pasó de 0,197 a 0,280 €/kWh (+41,6 %) y explica +10.294 € de los +13.961 € que se deben solo al precio (74 %). Agosto suma +3.598 €, junio +1.119 € y mayo restó 1.050 €.</div></div>
+      <div class="row"><div class="mk">—</div><div class="tx">El consumo explica solo 2.250 € de la diferencia. Donde más crece el consumo facturado es Monolith Sur (La Nucía): <span class="hl">+66 % de kWh</span> frente a los mismos meses de 2025.</div></div>
+      <div class="row"><div class="mk">—</div><div class="tx">Por sociedad, <span class="hl">Mini Mix</span> es la que más sube por kWh (+30,5 %) y <span class="hl">Monolith Norte</span> la que más euros suma por precio (+4.474 €).</div></div>
+      <div class="row"><div class="mk">—</div><div class="tx">El suministro con más consumo es <span class="hl">Llorenç del Penedès (Monolith Norte)</span>: 164 MWh y 33.475 € al año, el 10 % del grupo. Los cinco mayores suman el 36 % de la energía.</div></div>
+      <div class="row"><div class="mk">—</div><div class="tx">El mercado diario (OMIE) pasó de 71 €/MWh en junio a 109 en julio, 122 en agosto, 144 en septiembre y <span class="hl">164 en lo que va de octubre</span>. En 2025 estaba plano en torno a 70.</div></div>
+      <div class="row"><div class="mk">—</div><div class="tx">Reactiva: 2.771 € en 12 meses, el 98 % en seis suministros. Excesos de potencia: 563 €, la mayor parte en La Nucía (Monolith Sur) y Alcalá de Henares (Mini Mix).</div></div>
+      <div class="row"><div class="mk">—</div><div class="tx">Los <span class="hl">12 suministros en 2.0TD</span> (≈ 52.000 € al año) estaban con Gaolania hasta el 15–20 de septiembre y en el panel no hay renovación registrada.</div></div>
+      <div class="row"><div class="mk">—</div><div class="tx"><span class="hl">Fijo o indexado en Mini Mix:</span> un fijo hoy rondaría 0,181 €/kWh de energía (+41 % frente al último año, un 27 % por debajo de lo que cuesta ya el indexado en octubre). Si 2027 baja como dicen los futuros, seguir indexado ahorra ≈ 1.800 € en 12 meses; si el invierno se tensa, cuesta ≈ 6.000 € más. En el escenario base el fijo gana hasta diciembre. Detalle en las secciones 05 a 07.</div></div>
+    </div>
+    <a class="backtop" href="#top"><a class="backtop" href="#top">↑ volver arriba</a>
+  </div>
+</section>
+
+<!-- 02 EVOLUCIÓN -->
+<section class="light pad" id="evolucion" style="background:var(--paper2);">
+  <div class="wrap">
+    <div class="kicker">Facturas mayo–agosto · 21 suministros en 3.0TD</div>
+    <h1 class="section"><span class="no">02 —</span> Evolución mensual: julio y agosto lo explican todo</h1>
+    <div class="chart-title">€/kWh pagado con IVA · variación 2026 vs 2025 encima de cada mes</div>
+    <svg viewBox="0 0 640 250" width="100%" role="img" aria-label="Comparativa año contra año"><line x1="44" x2="634" y1="222.0" y2="222.0" stroke="#e4dfce" stroke-width="1"/><text x="38" y="226.0" text-anchor="end" class="ax">0,00</text><line x1="44" x2="634" y1="187.3" y2="187.3" stroke="#e4dfce" stroke-width="1"/><text x="38" y="191.3" text-anchor="end" class="ax">0,05</text><line x1="44" x2="634" y1="152.7" y2="152.7" stroke="#e4dfce" stroke-width="1"/><text x="38" y="156.7" text-anchor="end" class="ax">0,10</text><line x1="44" x2="634" y1="118.0" y2="118.0" stroke="#e4dfce" stroke-width="1"/><text x="38" y="122.0" text-anchor="end" class="ax">0,15</text><line x1="44" x2="634" y1="83.3" y2="83.3" stroke="#e4dfce" stroke-width="1"/><text x="38" y="87.3" text-anchor="end" class="ax">0,20</text><line x1="44" x2="634" y1="48.7" y2="48.7" stroke="#e4dfce" stroke-width="1"/><text x="38" y="52.7" text-anchor="end" class="ax">0,25</text><line x1="44" x2="634" y1="14.0" y2="14.0" stroke="#e4dfce" stroke-width="1"/><text x="38" y="18.0" text-anchor="end" class="ax">0,30</text><rect x="76.8" y="95.3" width="40.0" height="126.7" rx="3" fill="#d6cdb0"><title>May 2025: 0,18</title></rect><rect x="118.8" y="111.2" width="40.0" height="110.8" rx="3" fill="#b3841c"><title>May 2026: 0,16</title></rect><text x="117.8" y="90.3" text-anchor="middle" class="dl" fill="#4d7a3a">−12,6 %</text><text x="117.8" y="242" text-anchor="middle" class="ax">May</text><rect x="224.2" y="98.3" width="40.0" height="123.7" rx="3" fill="#d6cdb0"><title>Jun 2025: 0,18</title></rect><rect x="266.2" y="84.8" width="40.0" height="137.2" rx="3" fill="#b3841c"><title>Jun 2026: 0,20</title></rect><text x="265.2" y="79.8" text-anchor="middle" class="dl" fill="#a8321e">+10,9 %</text><text x="265.2" y="242" text-anchor="middle" class="ax">Jun</text><rect x="371.8" y="85.1" width="40.0" height="136.9" rx="3" fill="#d6cdb0"><title>Jul 2025: 0,20</title></rect><rect x="413.8" y="28.2" width="40.0" height="193.8" rx="3" fill="#b3841c"><title>Jul 2026: 0,28</title></rect><text x="412.8" y="23.2" text-anchor="middle" class="dl" fill="#a8321e">+41,6 %</text><text x="412.8" y="242" text-anchor="middle" class="ax">Jul</text><rect x="519.2" y="93.7" width="40.0" height="128.3" rx="3" fill="#d6cdb0"><title>Ago 2025: 0,19</title></rect><rect x="561.2" y="71.2" width="40.0" height="150.8" rx="3" fill="#b3841c"><title>Ago 2026: 0,22</title></rect><text x="560.2" y="66.2" text-anchor="middle" class="dl" fill="#a8321e">+17,5 %</text><text x="560.2" y="242" text-anchor="middle" class="ax">Ago</text></svg>
+    <div class="legend"><span class="it"><span class="sw" style="background:#d6cdb0"></span>2025</span><span class="it"><span class="sw" style="background:#b3841c"></span>2026</span> · suministros con factura en el mismo mes de 2025 y de 2026</div>
+    <div class="tbl"><table>
+      <thead><tr><th>Mes</th><th>Fact.</th><th>kWh 2025</th><th>kWh 2026</th><th>€/kWh 25</th><th>€/kWh 26</th><th>Var.</th><th>Total 2025</th><th>Total 2026</th><th>Diferencia</th></tr></thead>
+      <tbody><tr><td>May</td><td>10</td><td>44.442</td><td>45.631</td><td>0,183</td><td>0,160</td><td class='dn'>−12,6 %</td><td>8.123 €</td><td>7.291 €</td><td class='dn'>−832 €</td></tr><tr><td>Jun</td><td>10</td><td>58.937</td><td>57.639</td><td>0,178</td><td>0,198</td><td class='up'>+10,9 %</td><td>10.518 €</td><td>11.405 €</td><td class='up'>+887 €</td></tr><tr><td>Jul</td><td>15</td><td>124.058</td><td>125.351</td><td>0,197</td><td>0,280</td><td class='up'>+41,6 %</td><td>24.493 €</td><td>35.043 €</td><td class='up'>+10.550 €</td></tr><tr><td>Ago</td><td>13</td><td>99.943</td><td>110.801</td><td>0,185</td><td>0,218</td><td class='up'>+17,5 %</td><td>18.493 €</td><td>24.100 €</td><td class='up'>+5.607 €</td></tr><tr class='tot'><td>May–Ago</td><td>48</td><td>327.380</td><td>339.422</td><td>0,188</td><td>0,229</td><td class='up'>+21,8 %</td><td>61.627 €</td><td>77.838 €</td><td class='up'>+16.212 €</td></tr></tbody>
+    </table></div>
+    <div class="note">Mayo–agosto son los cuatro meses con factura en ambos años para los mismos suministros. Efecto precio = (€/kWh 2026 − €/kWh 2025) × kWh 2026: +13.961 €. Efecto volumen: +2.250 €.</div>
+    <div class="twocol" style="margin-top:30px;">
+      <div class="col"><p><b style="font-weight:600">Mayo, a favor.</b> El contrato fijo de Axpo salió un 12,6 % más barato por kWh que lo que pagaban en 2025, con el mercado todavía bajo. Junio ya empieza a subir (+10,9 %).</p></div>
+      <div class="col"><p><b style="font-weight:600">Julio y agosto, aquí está todo.</b> En julio el kWh pasó de 0,197 a 0,280 € (+41,6 %), el mes del cambio de Axpo a Apolo (16 de julio) y de la subida del OMIE de 71 a 109 €/MWh. Agosto, ya con el fijo de Apolo, cierra en +17,5 %.</p></div>
     </div>
 
-    <div class="comp-col proposed">
-      <div class="comp-col-header">
-        Propuesta Ingedás
-        <div class="brand">Precio fijo · Permanencia 12 meses</div>
+    <h3>Por sociedad (mayo–agosto)</h3>
+    <div class="tbl" style="margin-top:0"><table>
+      <thead><tr><th>Sociedad</th><th>kWh 2025</th><th>kWh 2026</th><th>€/kWh 25</th><th>€/kWh 26</th><th>Var.</th><th>Total 2025</th><th>Total 2026</th><th>Diferencia</th></tr></thead>
+      <tbody><tr><td>Monolith Norte</td><td>110.407</td><td>111.707</td><td>0,188</td><td>0,228</td><td class='up'>+21,3 %</td><td>20.801 €</td><td>25.519 €</td><td class='up'>+4.719 €</td></tr><tr><td>Monolith</td><td>96.478</td><td>99.837</td><td>0,187</td><td>0,220</td><td class='up'>+17,8 %</td><td>18.028 €</td><td>21.975 €</td><td class='up'>+3.947 €</td></tr><tr><td>Mini Mix</td><td>42.043</td><td>34.298</td><td>0,191</td><td>0,250</td><td class='up'>+30,5 %</td><td>8.045 €</td><td>8.562 €</td><td class='up'>+517 €</td></tr><tr><td>Monolith Sur</td><td>25.696</td><td>42.660</td><td>0,191</td><td>0,236</td><td class='up'>+23,5 %</td><td>4.916 €</td><td>10.083 €</td><td class='up'>+5.167 €</td></tr><tr><td>Anna N. (part.)</td><td>36.310</td><td>35.826</td><td>0,188</td><td>0,233</td><td class='up'>+23,9 %</td><td>6.824 €</td><td>8.344 €</td><td class='up'>+1.520 €</td></tr><tr><td>Kuzbass</td><td>16.446</td><td>15.095</td><td>0,183</td><td>0,222</td><td class='up'>+21,3 %</td><td>3.013 €</td><td>3.355 €</td><td class='up'>+342 €</td></tr><tr class='tot'><td>Grupo (21 en 3.0TD)</td><td>327.380</td><td>339.422</td><td>0,188</td><td>0,229</td><td class='up'>+21,8 %</td><td>61.627 €</td><td>77.838 €</td><td class='up'>+16.212 €</td></tr></tbody>
+    </table></div>
+
+    <div class="chart-title">€/kWh pagado con IVA, mes a mes · 13 suministros con 12 meses completos (septiembre 2025 – agosto 2026)</div>
+    <svg viewBox="0 0 640 250" width="100%" role="img" aria-label="Serie mensual"><line x1="44" x2="634" y1="222.0" y2="222.0" stroke="#e4dfce" stroke-width="1"/><text x="38" y="226.0" text-anchor="end" class="ax">0,00</text><line x1="44" x2="634" y1="187.3" y2="187.3" stroke="#e4dfce" stroke-width="1"/><text x="38" y="191.3" text-anchor="end" class="ax">0,05</text><line x1="44" x2="634" y1="152.7" y2="152.7" stroke="#e4dfce" stroke-width="1"/><text x="38" y="156.7" text-anchor="end" class="ax">0,10</text><line x1="44" x2="634" y1="118.0" y2="118.0" stroke="#e4dfce" stroke-width="1"/><text x="38" y="122.0" text-anchor="end" class="ax">0,15</text><line x1="44" x2="634" y1="83.3" y2="83.3" stroke="#e4dfce" stroke-width="1"/><text x="38" y="87.3" text-anchor="end" class="ax">0,20</text><line x1="44" x2="634" y1="48.7" y2="48.7" stroke="#e4dfce" stroke-width="1"/><text x="38" y="52.7" text-anchor="end" class="ax">0,25</text><line x1="44" x2="634" y1="14.0" y2="14.0" stroke="#e4dfce" stroke-width="1"/><text x="38" y="18.0" text-anchor="end" class="ax">0,30</text><rect x="53.3" y="96.0" width="30.5" height="126.0" rx="3" fill="#d6cdb0"><title>Sep: 0,18</title></rect><text x="68.6" y="91.0" text-anchor="middle" class="dl" fill="#15140f">0,18</text><text x="68.6" y="242" text-anchor="middle" class="ax">Sep</text><rect x="102.5" y="82.0" width="30.5" height="140.0" rx="3" fill="#d6cdb0"><title>Oct: 0,20</title></rect><text x="117.8" y="77.0" text-anchor="middle" class="dl" fill="#15140f">0,20</text><text x="117.8" y="242" text-anchor="middle" class="ax">Oct</text><rect x="151.7" y="87.5" width="30.5" height="134.5" rx="3" fill="#d6cdb0"><title>Nov: 0,19</title></rect><text x="166.9" y="82.5" text-anchor="middle" class="dl" fill="#15140f">0,19</text><text x="166.9" y="242" text-anchor="middle" class="ax">Nov</text><rect x="200.8" y="64.9" width="30.5" height="157.1" rx="3" fill="#d6cdb0"><title>Dic: 0,23</title></rect><text x="216.1" y="59.9" text-anchor="middle" class="dl" fill="#15140f">0,23</text><text x="216.1" y="242" text-anchor="middle" class="ax">Dic</text><rect x="250.0" y="78.6" width="30.5" height="143.4" rx="3" fill="#b3841c"><title>Ene: 0,21</title></rect><text x="265.2" y="73.6" text-anchor="middle" class="dl" fill="#15140f">0,21</text><text x="265.2" y="242" text-anchor="middle" class="ax">Ene</text><rect x="299.2" y="69.4" width="30.5" height="152.6" rx="3" fill="#b3841c"><title>Feb: 0,22</title></rect><text x="314.4" y="64.4" text-anchor="middle" class="dl" fill="#15140f">0,22</text><text x="314.4" y="242" text-anchor="middle" class="ax">Feb</text><rect x="348.3" y="86.8" width="30.5" height="135.2" rx="3" fill="#b3841c"><title>Mar: 0,19</title></rect><text x="363.6" y="81.8" text-anchor="middle" class="dl" fill="#15140f">0,19</text><text x="363.6" y="242" text-anchor="middle" class="ax">Mar</text><rect x="397.5" y="115.1" width="30.5" height="106.9" rx="3" fill="#b3841c"><title>Abr: 0,15</title></rect><text x="412.8" y="110.1" text-anchor="middle" class="dl" fill="#15140f">0,15</text><text x="412.8" y="242" text-anchor="middle" class="ax">Abr</text><rect x="446.7" y="110.8" width="30.5" height="111.2" rx="3" fill="#b3841c"><title>May: 0,16</title></rect><text x="461.9" y="105.8" text-anchor="middle" class="dl" fill="#15140f">0,16</text><text x="461.9" y="242" text-anchor="middle" class="ax">May</text><rect x="495.8" y="84.8" width="30.5" height="137.2" rx="3" fill="#b3841c"><title>Jun: 0,20</title></rect><text x="511.1" y="79.8" text-anchor="middle" class="dl" fill="#15140f">0,20</text><text x="511.1" y="242" text-anchor="middle" class="ax">Jun</text><rect x="545.0" y="27.5" width="30.5" height="194.5" rx="3" fill="#b3841c"><title>Jul: 0,28</title></rect><text x="560.2" y="22.5" text-anchor="middle" class="dl" fill="#15140f">0,28</text><text x="560.2" y="242" text-anchor="middle" class="ax">Jul</text><rect x="594.2" y="71.2" width="30.5" height="150.8" rx="3" fill="#b3841c"><title>Ago: 0,22</title></rect><text x="609.4" y="66.2" text-anchor="middle" class="dl" fill="#15140f">0,22</text><text x="609.4" y="242" text-anchor="middle" class="ax">Ago</text></svg>
+    <div class="legend"><span class="it"><span class="sw" style="background:#d6cdb0"></span>2025</span><span class="it"><span class="sw" style="background:#b3841c"></span>2026</span></div>
+    <p style="margin-top:14px; max-width:700px;">El precio por kWh baja de diciembre a abril, toca suelo en abril (0,154 €/kWh) y se dispara en verano hasta 0,281 en julio. Es la misma forma que el mercado, con un mes de retraso.</p>
+
+    <h3>Importe pagado por año y sociedad</h3>
+    <div class="tbl" style="margin-top:0"><table>
+      <thead><tr><th>Sociedad</th><th>Sumin.</th><th>2025 (may–dic)</th><th>2026 (ene–ago)</th><th>Últ. 12 meses</th><th>Anual estimado</th><th>kWh/año</th><th>€/kWh</th></tr></thead>
+      <tbody><tr><td>Kuzbass</td><td>10</td><td>69.675 €</td><td>29.377 €</td><td>67.445 €</td><td>107.821 €</td><td>560.717</td><td>0,192</td></tr><tr><td>Monolith Norte</td><td>4</td><td>41.994 €</td><td>49.711 €</td><td>70.904 €</td><td>70.904 €</td><td>345.221</td><td>0,205</td></tr><tr><td>Monolith</td><td>5</td><td>32.220 €</td><td>33.125 €</td><td>47.317 €</td><td>47.317 €</td><td>226.605</td><td>0,209</td></tr><tr><td>Mini Mix</td><td>3</td><td>24.259 €</td><td>20.962 €</td><td>34.046 €</td><td>41.783 €</td><td>211.095</td><td>0,198</td></tr><tr><td>Monolith Sur</td><td>1</td><td>11.199 €</td><td>15.214 €</td><td>21.496 €</td><td>21.496 €</td><td>100.171</td><td>0,215</td></tr><tr><td>Anna N. (part.)</td><td>6</td><td>17.210 €</td><td>21.298 €</td><td>31.451 €</td><td>34.296 €</td><td>162.717</td><td>0,211</td></tr><tr><td>Yulia N. (part.)</td><td>3</td><td>5.367 €</td><td>412 €</td><td>4.576 €</td><td>12.746 €</td><td>61.206</td><td>0,208</td></tr><tr class='tot'><td>Grupo</td><td>32</td><td>201.928 €</td><td>170.099 €</td><td>277.235 €</td><td>336.364 €</td><td>1.667.734</td><td>0,202</td></tr></tbody>
+    </table></div>
+    <div class="note">Importes facturados con IVA. «Últimos 12 meses» = septiembre 2025 – agosto 2026 con las facturas disponibles; «anual estimado» = media mensual × 12 de cada suministro. Kuzbass no tiene facturas desde mayo en 6 de sus 10 suministros, por eso su 2026 es tan bajo.</div>
+
+    <h3>Energía y fijos: no son comparables entre comercializadoras</h3>
+    <p style="max-width:720px;">Fijos = neto − término de energía (potencia, alquiler, impuesto eléctrico, excesos y reactiva). Con Axpo y Apolo una parte mayor del coste se factura fuera de la energía:
+      el neto sin IVA por kWh medio del periodo es de 0,153 con Next, 0,162 con AEQ, 0,169 con Axpo y 0,177 con Apolo, pero el término de energía es más bajo en invierno con Axpo. Por eso hay que mirar el neto por kWh y no solo la energía.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Mes</th><th>Sumin.</th><th>kWh</th><th>Energía €/kWh</th><th>Fijos € por suministro</th><th>Neto €/kWh (sin IVA)</th></tr></thead>
+      <tbody><tr><td>Sep 25</td><td>31</td><td>146.077</td><td>0,122</td><td>116 €</td><td>0,147</td></tr><tr><td>Oct 25</td><td>30</td><td>136.946</td><td>0,136</td><td>120 €</td><td>0,163</td></tr><tr><td>Nov 25</td><td>31</td><td>121.985</td><td>0,129</td><td>114 €</td><td>0,158</td></tr><tr><td>Dic 25</td><td>31</td><td>123.662</td><td>0,139</td><td class=up>202 €</td><td>0,190</td></tr><tr><td>Ene 26</td><td>27</td><td>105.068</td><td>0,109</td><td>254 €</td><td>0,174</td></tr><tr><td>Feb 26</td><td>21</td><td>89.342</td><td>0,105</td><td>333 €</td><td>0,183</td></tr><tr><td>Mar 26</td><td>21</td><td>99.520</td><td>0,099</td><td>291 €</td><td>0,160</td></tr><tr><td>Abr 26</td><td>21</td><td>101.408</td><td>0,086</td><td>196 €</td><td>0,126</td></tr><tr><td>May 26</td><td>18</td><td>82.898</td><td>0,092</td><td>192 €</td><td>0,134</td></tr><tr><td>Jun 26</td><td>18</td><td>97.884</td><td>0,137</td><td>151 €</td><td>0,165</td></tr><tr><td>Jul 26</td><td>18</td><td>116.384</td><td>0,200</td><td>199 €</td><td>0,231</td></tr><tr><td>Ago 26</td><td>17</td><td>113.654</td><td>0,132</td><td class=up>325 €</td><td>0,180</td></tr></tbody>
+    </table></div>
+    <div class="note">Meses anómalos en fijos: <b>diciembre 2025</b> (de 116 a 202 € por suministro, con la entrada de Axpo) y <b>agosto 2026</b> (de 199 a 325 €, primera factura completa de Apolo), mientras la energía por kWh no sube. Calculado con las facturas cuyo reparto por periodos suma el total de kWh.</div>
+    <div class="tbl"><table style="min-width:520px">
+      <thead><tr><th>Suministro</th><th>Mes</th><th>Fijos facturados</th><th>Fijos habituales</th></tr></thead>
+      <tbody>
+        <tr><td>Castell-Platja d'Aro</td><td>Ago 26</td><td class="up">855 €</td><td>110 €</td></tr>
+        <tr><td>La Nucía (Monolith Sur)</td><td>Jul y ago 26</td><td class="up">576 € y 590 €</td><td>235 €</td></tr>
+        <tr><td>Tarragona</td><td>Ago 26</td><td class="up">455 €</td><td>142 €</td></tr>
+        <tr><td>Valencia (Kuzbass)</td><td>Dic 25</td><td class="up">519 €</td><td>119 €</td></tr>
+        <tr><td>Torrevieja (Kuzbass, 40 kW)</td><td>Ene–mar 26</td><td class="up">535–665 €</td><td>255 €</td></tr>
+        <tr><td>Alicante (Kuzbass, 25 kW)</td><td>Ene y feb 26</td><td class="up">520–581 €</td><td>248 €</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Todos los suministros, por consumo (septiembre 2025 – agosto 2026)</h3>
+    <div class="tbl" style="margin-top:0"><table class="sm">
+      <thead><tr><th class="l">Suministro</th><th class="l">Sociedad</th><th>Tarifa · potencia</th><th>MWh/año</th><th>€/año</th><th>€/kWh</th><th>% P6</th><th>Reactiva</th><th>Exceso</th><th>Meses</th></tr></thead>
+      <tbody><tr><td class='l'>Llorenç del Penedès <span style='color:#8a8676'>·3001CC</span></td><td class='l'>Monolith Norte</td><td>3.0TD · 43,6 kW</td><td>164,3</td><td>33.475</td><td>0,204</td><td>46 %</td><td>743 €</td><td>12 €</td><td>12</td></tr><tr><td class='l'>Torrevieja <span style='color:#8a8676'>·7080LN</span></td><td class='l'>Kuzbass</td><td>3.0TD · 40,0 kW</td><td>121,8*</td><td>23.063*</td><td>0,189</td><td>48 %</td><td>—</td><td>—</td><td>8</td></tr><tr><td class='l'>Mejorada del Campo <span style='color:#8a8676'>·0591FV</span></td><td class='l'>Monolith Norte</td><td>3.0TD · 40,0 kW</td><td>110,5</td><td>22.214</td><td>0,201</td><td>47 %</td><td>—</td><td>—</td><td>12</td></tr><tr><td class='l'>Léganes <span style='color:#8a8676'>·9734YQ</span></td><td class='l'>Mini Mix</td><td>3.0TD · 26,4 kW</td><td>110,2*</td><td>21.682*</td><td>0,197</td><td>51 %</td><td>503 €</td><td>—</td><td>11</td></tr><tr><td class='l'>La Nucía <span style='color:#8a8676'>·4388VB</span></td><td class='l'>Monolith Sur</td><td>3.0TD · 43,0 kW</td><td>100,2</td><td>21.496</td><td>0,215</td><td>41 %</td><td>43 €</td><td>205 €</td><td>12</td></tr><tr><td class='l'>Alicante <span style='color:#8a8676'>·5420ML</span></td><td class='l'>Kuzbass</td><td>3.0TD · 25,0 kW</td><td>96,7*</td><td>18.048*</td><td>0,187</td><td>48 %</td><td>601 €</td><td>—</td><td>8</td></tr><tr><td class='l'>Castell-Platja d'Aro <span style='color:#8a8676'>·8001CK</span></td><td class='l'>Anna N. (part.)</td><td>3.0TD · 15,0 kW</td><td>72,3</td><td>14.090</td><td>0,195</td><td>50 %</td><td>—</td><td>24 €</td><td>12</td></tr><tr><td class='l'>Valencia <span style='color:#8a8676'>·8084BB</span></td><td class='l'>Monolith</td><td>3.0TD · 16,5 kW</td><td>64,7</td><td>12.790</td><td>0,198</td><td>47 %</td><td>—</td><td>20 €</td><td>12</td></tr><tr><td class='l'>Tarragona <span style='color:#8a8676'>·1031ZM</span></td><td class='l'>Monolith Norte</td><td>3.0TD · 15,0 kW</td><td>63,8</td><td>12.825</td><td>0,201</td><td>48 %</td><td>—</td><td>7 €</td><td>12</td></tr><tr><td class='l'>Altea <span style='color:#8a8676'>·5377DM</span></td><td class='l'>Kuzbass</td><td>3.0TD · 19,0 kW</td><td>61,0*</td><td>11.505*</td><td>0,189</td><td>48 %</td><td>—</td><td>—</td><td>8</td></tr><tr><td class='l'>Barcelona <span style='color:#8a8676'>·2003SQ</span></td><td class='l'>Anna N. (part.)</td><td>3.0TD · 19,0 kW</td><td>58,1</td><td>12.005</td><td>0,207</td><td>43 %</td><td>—</td><td>—</td><td>12</td></tr><tr><td class='l'>Móstoles <span style='color:#8a8676'>·1063WK</span></td><td class='l'>Mini Mix</td><td>3.0TD · 16,0 kW</td><td>51,1</td><td>11.206</td><td>0,219</td><td>50 %</td><td>297 €</td><td>—</td><td>12</td></tr><tr><td class='l'>Alcalá de Henares <span style='color:#8a8676'>·3910NY</span></td><td class='l'>Mini Mix</td><td>2.0TD · 1,039 kW</td><td>49,8*</td><td>8.895*</td><td>0,179</td><td>—</td><td>—</td><td>285 €</td><td>4</td></tr><tr><td class='l'>Roquetas del Mar <span style='color:#8a8676'>·7042MZ</span></td><td class='l'>Monolith</td><td>3.0TD · 15,1 kW</td><td>48,7</td><td>10.000</td><td>0,205</td><td>47 %</td><td>—</td><td>7 €</td><td>12</td></tr><tr><td class='l'>Torrevieja <span style='color:#8a8676'>·9975QM</span></td><td class='l'>Kuzbass</td><td>3.0TD · 15,0 kW</td><td>48,0*</td><td>9.749*</td><td>0,203</td><td>49 %</td><td>163 €</td><td>—</td><td>8</td></tr><tr><td class='l'>Badalona <span style='color:#8a8676'>·5001ZF</span></td><td class='l'>Kuzbass</td><td>3.0TD · 17,3 kW</td><td>45,8*</td><td>9.291*</td><td>0,203</td><td>51 %</td><td>—</td><td>—</td><td>11</td></tr><tr><td class='l'>Dénia <span style='color:#8a8676'>·6930RJ</span></td><td class='l'>Monolith</td><td>3.0TD · 15,0 kW</td><td>44,6</td><td>9.385</td><td>0,210</td><td>48 %</td><td>—</td><td>—</td><td>12</td></tr><tr><td class='l'>Alicante <span style='color:#8a8676'>·8336TX</span></td><td class='l'>Kuzbass</td><td>2.0TD · 11,5 kW</td><td>44,0*</td><td>8.392*</td><td>0,191</td><td>—</td><td>—</td><td>—</td><td>5</td></tr><tr><td class='l'>Murcia <span style='color:#8a8676'>·5189ZZ</span></td><td class='l'>Kuzbass</td><td>2.0TD · 13,9 kW</td><td>37,6*</td><td>6.267*</td><td>0,167</td><td>—</td><td>—</td><td>—</td><td>4</td></tr><tr><td class='l'>Benidorm <span style='color:#8a8676'>·6157TG</span></td><td class='l'>Kuzbass</td><td>3.0TD · 15,0 kW</td><td>37,2*</td><td>7.258*</td><td>0,195</td><td>47 %</td><td>—</td><td>—</td><td>8</td></tr><tr><td class='l'>La Nucía <span style='color:#8a8676'>·6603LF</span></td><td class='l'>Monolith</td><td>3.0TD · 16,2 kW</td><td>36,2</td><td>8.333</td><td>0,230</td><td>61 %</td><td>422 €</td><td>2 €</td><td>12</td></tr><tr><td class='l'>Valencia <span style='color:#8a8676'>·1042ER</span></td><td class='l'>Kuzbass</td><td>2.0TD · 13,9 kW</td><td>36,1*</td><td>7.713*</td><td>0,214</td><td>—</td><td>—</td><td>—</td><td>4</td></tr><tr><td class='l'>Cartagena <span style='color:#8a8676'>·0380WY</span></td><td class='l'>Kuzbass</td><td>3.0TD · 17,0 kW</td><td>32,4*</td><td>6.535*</td><td>0,202</td><td>50 %</td><td>—</td><td>—</td><td>8</td></tr><tr><td class='l'>Orihuela <span style='color:#8a8676'>·4265BL</span></td><td class='l'>Monolith</td><td>3.0TD · 15,0 kW</td><td>32,3</td><td>6.809</td><td>0,211</td><td>45 %</td><td>—</td><td>—</td><td>12</td></tr><tr><td class='l'>Girona <span style='color:#8a8676'>·3005XL</span></td><td class='l'>Yulia N. (part.)</td><td>2.0TD · 9,2 kW</td><td>26,0*</td><td>4.274*</td><td>0,165</td><td>—</td><td>—</td><td>—</td><td>4</td></tr><tr><td class='l'>Lérida <span style='color:#8a8676'>·1009PG</span></td><td class='l'>Yulia N. (part.)</td><td>2.0TD · 10,0 kW</td><td>19,3*</td><td>4.546*</td><td>0,235</td><td>—</td><td>—</td><td>—</td><td>4</td></tr><tr><td class='l'>Lleida <span style='color:#8a8676'>·1010PM</span></td><td class='l'>Yulia N. (part.)</td><td>2.0TD · 10,0 kW</td><td>15,9*</td><td>3.927*</td><td>0,247</td><td>—</td><td>—</td><td>—</td><td>5</td></tr><tr><td class='l'>Valencia <span style='color:#8a8676'>·8086BJ</span></td><td class='l'>Anna N. (part.)</td><td>2.0TD · 13,2 kW</td><td>15,0*</td><td>3.201*</td><td>0,214</td><td>—</td><td>—</td><td>—</td><td>7</td></tr><tr><td class='l'>Callosa d'en Sarrià <span style='color:#8a8676'>·3021BJ</span></td><td class='l'>Anna N. (part.)</td><td>2.0TD · 13,9 kW</td><td>12,8*</td><td>3.430*</td><td>0,267</td><td>—</td><td>—</td><td>—</td><td>9</td></tr><tr><td class='l'>Mejorada del Campo <span style='color:#8a8676'>·0590FQ</span></td><td class='l'>Monolith Norte</td><td>3.0TD · 20,7 kW</td><td>6,6</td><td>2.390</td><td>0,362</td><td>23 %</td><td>—</td><td>—</td><td>12</td></tr><tr><td class='l'>Llorenç del Penedès <span style='color:#8a8676'>·3001QB</span></td><td class='l'>Anna N. (part.)</td><td>2.0TD · 6,9 kW</td><td>2,8*</td><td>1.026*</td><td>0,367</td><td>—</td><td>—</td><td>—</td><td>7</td></tr><tr><td class='l'>Benidorm <span style='color:#8a8676'>·4210SY</span></td><td class='l'>Anna N. (part.)</td><td>2.0TD · 3,5 kW</td><td>1,7*</td><td>545*</td><td>0,319</td><td>—</td><td>—</td><td>—</td><td>7</td></tr></tbody>
+    </table></div>
+    <div class="note">€/año con IVA. * Estimación sobre los meses con factura (columna «Meses»). No se incluye el suministro de Tatiana N. en Benidorm, con 8 kWh facturados.</div>
+    <a class="backtop" href="#top">↑ volver arriba</a>
+  </div>
+</section>
+
+<!-- 03 CURVA -->
+<section class="light pad" id="curva">
+  <div class="wrap">
+    <div class="kicker">Curva de consumo frente al mercado</div>
+    <h1 class="section"><span class="no">03 —</span> La curva frente al mercado: casi la mitad en P6</h1>
+    <p style="margin-top:22px; max-width:700px;">
+      El mercado tiene forma de "pato": la fotovoltaica hunde el precio al mediodía y, cuando se pone el sol, entran el gas y los ciclos
+      combinados y el precio se dispara. La madrugada, que en la 3.0TD es P6, cotiza ahora <span class="hl">muy por encima de la media del día</span>.
+      El grupo tiene el <span class="hl">47 % de su consumo en 3.0TD en P6</span>.
+    </p>
+    <div class="chart-title">€/MWh · OMIE, precio medio por hora en días laborables · agosto, septiembre y octubre (1–14) de 2026</div>
+    <svg viewBox="0 0 640 260" width="100%" role="img" aria-label="Precio OMIE medio por hora"><rect x="44" y="14" width="192" height="216" fill="#e7b92e" opacity=".18"/><text x="140" y="28" text-anchor="middle" class="lb">P6 · "horario barato" (0–8 h)</text><text x="356" y="224" text-anchor="middle" class="lb">Mediodía solar: lo más barato</text><line x1="44" x2="634" y1="230.0" y2="230.0" stroke="#e4dfce"/><text x="38" y="234.0" text-anchor="end" class="ax">0</text><line x1="44" x2="634" y1="186.8" y2="186.8" stroke="#e4dfce"/><text x="38" y="190.8" text-anchor="end" class="ax">50</text><line x1="44" x2="634" y1="143.6" y2="143.6" stroke="#e4dfce"/><text x="38" y="147.6" text-anchor="end" class="ax">100</text><line x1="44" x2="634" y1="100.4" y2="100.4" stroke="#e4dfce"/><text x="38" y="104.4" text-anchor="end" class="ax">150</text><line x1="44" x2="634" y1="57.2" y2="57.2" stroke="#e4dfce"/><text x="38" y="61.2" text-anchor="end" class="ax">200</text><line x1="44" x2="634" y1="14.0" y2="14.0" stroke="#e4dfce"/><text x="38" y="18.0" text-anchor="end" class="ax">250</text><text x="44" y="250" text-anchor="middle" class="ax">0h</text><text x="92" y="250" text-anchor="middle" class="ax">2h</text><text x="140" y="250" text-anchor="middle" class="ax">4h</text><text x="188" y="250" text-anchor="middle" class="ax">6h</text><text x="236" y="250" text-anchor="middle" class="ax">8h</text><text x="284" y="250" text-anchor="middle" class="ax">10h</text><text x="332" y="250" text-anchor="middle" class="ax">12h</text><text x="380" y="250" text-anchor="middle" class="ax">14h</text><text x="428" y="250" text-anchor="middle" class="ax">16h</text><text x="476" y="250" text-anchor="middle" class="ax">18h</text><text x="524" y="250" text-anchor="middle" class="ax">20h</text><text x="572" y="250" text-anchor="middle" class="ax">22h</text><polyline points="44.0,73.0 68.0,79.6 92.0,81.5 116.0,86.0 140.0,87.7 164.0,86.9 188.0,77.8 212.0,71.5 236.0,83.7 260.0,123.5 284.0,168.7 308.0,189.1 332.0,193.9 356.0,202.0 380.0,204.0 404.0,210.5 428.0,205.8 452.0,182.6 476.0,153.6 500.0,102.5 524.0,64.5 548.0,48.6 572.0,62.9 596.0,73.2" fill="none" stroke="#c9c0a2" stroke-width="2" stroke-dasharray="4 3"/><text x="598" y="85.2" class="dl" fill="#15140f">Ago</text><polyline points="44.0,61.1 68.0,66.8 92.0,71.6 116.0,74.0 140.0,75.4 164.0,73.4 188.0,62.5 212.0,47.6 236.0,52.5 260.0,96.1 284.0,155.0 308.0,187.5 332.0,200.4 356.0,209.0 380.0,207.1 404.0,205.5 428.0,193.8 452.0,164.0 476.0,114.7 500.0,54.4 524.0,27.1 548.0,30.7 572.0,52.6 596.0,65.3" fill="none" stroke="#15140f" stroke-width="2" stroke-dasharray=""/><text x="598" y="68.3" class="dl" fill="#15140f">Sep</text><polyline points="44.0,57.5 68.0,67.9 92.0,73.5 116.0,75.9 140.0,75.5 164.0,72.0 188.0,60.8 212.0,41.9 236.0,31.1 260.0,65.0 284.0,115.6 308.0,152.3 332.0,166.8 356.0,174.0 380.0,176.1 404.0,173.5 428.0,163.4 452.0,132.6 476.0,76.0 500.0,31.1 524.0,17.8 548.0,34.1 572.0,48.8 596.0,58.9" fill="none" stroke="#b3841c" stroke-width="2" stroke-dasharray=""/><text x="598" y="52.9" class="dl" fill="#15140f">Oct</text></svg>
+    <div class="legend"><span class="it"><span class="sw" style="background:#c9c0a2"></span>Agosto</span><span class="it"><span class="sw" style="background:#15140f"></span>Septiembre</span><span class="it"><span class="sw" style="background:#b3841c"></span>Octubre</span><span class="it"><span class="sw" style="background:#e7b92e;opacity:.4"></span>Horas P6 entre semana</span></div>
+    <div class="twocol" style="margin-top:20px;">
+      <div class="col">
+        <h3>OMIE medio por bloque 3.0TD (€/MWh)</h3>
+        <div class="tbl" style="margin-top:0"><table style="min-width:0">
+          <thead><tr><th>2026</th><th>Media 2025</th><th>Media 2026</th><th>Punta</th><th>Llano</th><th>Valle P6</th><th>Valle vs media</th></tr></thead>
+          <tbody><tr><td>Junio</td><td>72,6</td><td class='dn'>71,1</td><td>53,1</td><td>57,9</td><td class='up'>85,2</td><td class='up'>+20 %</td></tr><tr><td>Julio</td><td>70,2</td><td class='up'>108,8</td><td>93,3</td><td>93,8</td><td class='up'>124,7</td><td class='up'>+15 %</td></tr><tr><td>Agosto</td><td>69,5</td><td class='up'>122,3</td><td>105,9</td><td>97,1</td><td class='up'>139,0</td><td class='up'>+14 %</td></tr><tr><td>Septiembre</td><td>69,5</td><td class='up'>144,4</td><td>128,0</td><td>110,6</td><td class='up'>169,0</td><td class='up'>+17 %</td></tr><tr><td>Octubre (1–14)</td><td>75,8</td><td class='up'>163,6</td><td>159,1</td><td>136,5</td><td class='up'>178,8</td><td class='up'>+9 %</td></tr></tbody></table></div>
+        <div class="note">Valle = laborables de 0 a 8 h + fines de semana completos. Punta = laborables de 9 a 14 h y de 18 a 22 h. Llano = el resto de laborables. Octubre, hasta el día 14.</div>
       </div>
-      <div class="comp-body">
-        <div class="comp-section-title">Término de Potencia · 365 días · 43,6 kW (BOE)</div>
-        <div class="comp-row"><span class="period">Tp1</span><span class="rate">0,055827 €/kW·día</span><span class="amount">888,43 €</span></div>
-        <div class="comp-row"><span class="period">Tp2</span><span class="rate">0,029089 €/kW·día</span><span class="amount">462,92 €</span></div>
-        <div class="comp-row"><span class="period">Tp3</span><span class="rate">0,012278 €/kW·día</span><span class="amount">195,39 €</span></div>
-        <div class="comp-row"><span class="period">Tp4</span><span class="rate">0,010647 €/kW·día</span><span class="amount">169,44 €</span></div>
-        <div class="comp-row"><span class="period">Tp5</span><span class="rate">0,006887 €/kW·día</span><span class="amount">109,60 €</span></div>
-        <div class="comp-row"><span class="period">Tp6</span><span class="rate">0,003951 €/kW·día</span><span class="amount">62,88 €</span></div>
-        <div class="comp-subtotal proposed-st"><span>Subtotal Potencia</span><span>1.888,66 €</span></div>
-        <div class="comp-section-title">Término de Energía (precio fijo por periodo)</div>
-        <div class="comp-row"><span class="period">Te1</span><span class="rate">15.538 kWh · 0,1838</span><span class="amount">2.855,88 €</span></div>
-        <div class="comp-row"><span class="period">Te2</span><span class="rate">18.625 kWh · 0,1485</span><span class="amount">2.765,81 €</span></div>
-        <div class="comp-row"><span class="period">Te3</span><span class="rate">18.794 kWh · 0,1185</span><span class="amount">2.227,09 €</span></div>
-        <div class="comp-row"><span class="period">Te4</span><span class="rate">22.251 kWh · 0,1085</span><span class="amount">2.414,23 €</span></div>
-        <div class="comp-row"><span class="period">Te5</span><span class="rate">8.809 kWh · 0,0935</span><span class="amount">823,64 €</span></div>
-        <div class="comp-row"><span class="period">Te6</span><span class="rate">74.531 kWh · 0,0985</span><span class="amount">7.341,30 €</span></div>
-        <div class="comp-subtotal proposed-st"><span>Subtotal Energía</span><span>18.427,96 €</span></div>
-        <div class="comp-section-title">Otros conceptos</div>
-        <div class="comp-extra-row"><span style="font-weight:600;">Base Imponible</span><span style="font-weight:600;">20.316,62 €</span></div>
-        <div class="comp-extra-row"><span>IEE (5,1127%)</span><span>1.038,73 €</span></div>
-        <div class="comp-extra-row"><span>IVA (21%)</span><span>4.484,62 €</span></div>
+      <div class="col">
+        <h3>Consumo en P6 por sociedad (3.0TD)</h3>
+        <div class="tbl" style="margin-top:0"><table style="min-width:0">
+          <thead><tr><th>Sociedad</th><th>Sumin.</th><th>MWh/año</th><th>% en P6</th></tr></thead>
+          <tbody><tr><td>Mini Mix</td><td>2</td><td>161</td><td>51 %</td></tr><tr><td>Monolith</td><td>5</td><td>227</td><td>49 %</td></tr><tr><td>Kuzbass</td><td>7</td><td>443</td><td>49 %</td></tr><tr><td>Anna N. (part.)</td><td>2</td><td>130</td><td>47 %</td></tr><tr><td>Monolith Norte</td><td>4</td><td>345</td><td>46 %</td></tr><tr><td>Monolith Sur</td><td>1</td><td>100</td><td>41 %</td></tr><tr class='tot'><td>Grupo 3.0TD</td><td>21</td><td>1.407</td><td>47 %</td></tr></tbody></table></div>
+        <div class="note">Sobre las facturas con reparto por periodos completo. Rango por suministro: del 23 % (Mejorada, 6,6 MWh/año) al 61 % (La Nucía, Monolith).</div>
       </div>
-      <div class="comp-total"><span>Total Anual</span><span>25.839,97 €</span></div>
+    </div>
+    <h3>En sus facturas de julio, el P6 es lo que más sube</h3>
+    <div class="tbl" style="margin-top:0"><table style="min-width:420px">
+      <thead><tr><th>Julio (energía, €/kWh)</th><th>2025</th><th>2026</th><th>Subida</th></tr></thead>
+      <tbody>
+        <tr><td>P1 · punta</td><td>0,1617</td><td>0,2300</td><td class="up">+42 %</td></tr>
+        <tr><td>P2 · llano</td><td>0,1434</td><td>0,2049</td><td class="up">+43 %</td></tr>
+        <tr><td>P6 · valle</td><td>0,1215</td><td>0,1803</td><td class="up">+48 %</td></tr>
+      </tbody></table></div>
+    <div class="callout">En septiembre el valle P6 cotizó a <span class="hl">169 €/MWh, un 17 % por encima de la media</span> y por encima de la punta (128) y del llano (111). Con un contrato indexado ya no se gana nada en energía por consumir de noche. Los dos suministros indexados de Mini Mix tienen el 50 % de su consumo en P6 y son los que lo pagan.</div>
+    <a class="backtop" href="#top">↑ volver arriba</a>
+  </div>
+</section>
+
+<!-- 04 PREVISIÓN -->
+<section class="dark pad" id="prevision">
+  <div class="wrap">
+    <div class="kicker">Escenario hasta diciembre</div>
+    <h1 class="section" style="color:#fff;"><span class="no">04 —</span> Qué viene: septiembre–diciembre</h1>
+    <p style="margin-top:8px; color:#a29f90; font-size:.86rem;">21 suministros 3.0TD con facturas de septiembre a diciembre de 2025 (460.745 kWh, 90.777 €). Los 19 a precio fijo, con el diferencial de agosto de Apolo (+17,5 % por kWh); los 2 indexados de Mini Mix y el caso «todo indexado», trasladando el OMIE (septiembre real; octubre a diciembre con OMIP Q4-26 ≈ 137 €/MWh, a 28/09/2026).</p>
+    <div class="bigstats">
+      <div class="row"><div class="num">≈ 28.700 €</div><div class="desc"><b style="color:#fff;font-weight:600">Septiembre</b> · 130.829 kWh · OMIE 69,5 → 144,4 €/MWh · 2025: 23.503 € · <span style="color:var(--gold)">+5.167 €</span> · indexado habría sido +14.346 €</div></div><div class="row"><div class="num">≈ 29.400 €</div><div class="desc"><b style="color:#fff;font-weight:600">Octubre</b> · 125.961 kWh · OMIE 75,8 → ~137 €/MWh · 2025: 24.467 € · <span style="color:var(--gold)">+4.969 €</span> · indexado habría sido +11.279 €</div></div><div class="row"><div class="num">≈ 23.700 €</div><div class="desc"><b style="color:#fff;font-weight:600">Noviembre</b> · 100.034 kWh · OMIE 59,0 → ~137 €/MWh · 2025: 19.339 € · <span style="color:var(--gold)">+4.340 €</span> · indexado habría sido +11.411 €</div></div><div class="row"><div class="num">≈ 28.100 €</div><div class="desc"><b style="color:#fff;font-weight:600">Diciembre</b> · 103.921 kWh · OMIE 77,9 → ~137 €/MWh · 2025: 23.468 € · <span style="color:var(--gold)">+4.670 €</span> · indexado habría sido +8.981 €</div></div>
+      <div class="row"><div class="num">≈ 109.900 €</div><div class="desc"><b style="color:#fff;font-weight:600">Septiembre–diciembre con los contratos actuales</b> · +19.146 € frente a 2025 (+21 %) · si los 21 estuvieran indexados serían ≈ 136.800 € (<span style="color:var(--gold)">+46.016 €, +51 %</span>).</div></div>
+    </div>
+    <div class="headlines">
+      <div class="h">En este escenario, el precio fijo de Apolo evita en estos cuatro meses unos <b style="color:var(--gold);font-weight:600">26.900 €</b> que el mercado habría trasladado a una tarifa indexada.</div>
+      <div class="h">Octubre ya va por encima del supuesto: el OMIE de los días 1 al 14 es de 164 €/MWh frente a los 137 del OMIP. Para los dos indexados de Mini Mix (Léganes y Móstoles) el escenario es de unos +5.000 € en cuatro meses sobre 10.100 €, y <b style="color:var(--gold);font-weight:600">cada +10 €/MWh de OMIE son ≈ 2.400 € al año</b>.</div>
+      <div class="h">Los futuros de 2027 (≈ 88 €/MWh de media a 28/09/2026) están muy por debajo del cuarto trimestre: el invierno debería ser lo más caro, y no se espera volver a los niveles de 2025.</div>
+      <div class="h">Los 12 suministros en 2.0TD (261 MWh y ≈ 52.000 € al año) no están en este escenario: sus contratos con Gaolania vencieron entre el 15 y el 20 de septiembre y no hay renovación en el panel.</div>
+    </div>
+    <p style="margin-top:22px; color:#a29f90; font-size:.78rem; line-height:1.6;">Método (caso indexado): diferencia de OMIE × 1,15 (pérdidas 3.0TD) × kWh del año anterior × impuesto eléctrico (5,11 %) × IVA (21 %). Caso fijo: facturas de 2025 × (1 + 17,5 %), subida del €/kWh de agosto de 2026 frente a agosto de 2025 en 13 suministros. No se consideran cambios en potencia ni en la estacionalidad del contrato. Es un escenario, no una previsión cerrada.</p>
+    <a class="backtop" href="#top">↑ volver arriba</a>
+  </div>
+</section>
+
+<section class="light alt pad" id="incremento" style="background:var(--paper2)">
+  <div class="wrap">
+    <div class="kicker">Léganes y Móstoles · 12 meses octubre 26 – septiembre 27</div>
+    <h1 class="section"><span class="no">05 —</span> Mini Mix: cuánto subiría un fijo hoy</h1>
+    <p style="margin-top:14px; max-width:700px;">Precio de la energía por kWh (sin impuestos, con peajes y cargos de energía incluidos) en los dos suministros. Septiembre y octubre de 2026 (*) son el indexado actual calculado con el OMIE real de cada mes. La barra oscura es el fijo supuesto.</p>
+    <div class="chart-title">Energía €/kWh · Mini Mix (Léganes + Móstoles)</div>
+    <svg viewBox="0 0 640 250" width="100%" role="img" aria-label="Serie mensual"><line x1="44" x2="634" y1="222.0" y2="222.0" stroke="#e4dfce" stroke-width="1"/><text x="38" y="226.0" text-anchor="end" class="ax">0,00</text><line x1="44" x2="634" y1="187.3" y2="187.3" stroke="#e4dfce" stroke-width="1"/><text x="38" y="191.3" text-anchor="end" class="ax">0,05</text><line x1="44" x2="634" y1="152.7" y2="152.7" stroke="#e4dfce" stroke-width="1"/><text x="38" y="156.7" text-anchor="end" class="ax">0,10</text><line x1="44" x2="634" y1="118.0" y2="118.0" stroke="#e4dfce" stroke-width="1"/><text x="38" y="122.0" text-anchor="end" class="ax">0,15</text><line x1="44" x2="634" y1="83.3" y2="83.3" stroke="#e4dfce" stroke-width="1"/><text x="38" y="87.3" text-anchor="end" class="ax">0,20</text><line x1="44" x2="634" y1="48.7" y2="48.7" stroke="#e4dfce" stroke-width="1"/><text x="38" y="52.7" text-anchor="end" class="ax">0,25</text><line x1="44" x2="634" y1="14.0" y2="14.0" stroke="#e4dfce" stroke-width="1"/><text x="38" y="18.0" text-anchor="end" class="ax">0,30</text><rect x="51.5" y="135.6" width="24.4" height="86.4" rx="3" fill="#d6cdb0"><title>Sep: 0,12</title></rect><text x="63.7" y="130.6" text-anchor="middle" class="dl" fill="#15140f">0,12</text><text x="63.7" y="242" text-anchor="middle" class="ax">Sep</text><rect x="90.8" y="123.8" width="24.4" height="98.2" rx="3" fill="#d6cdb0"><title>Oct: 0,14</title></rect><text x="103.0" y="118.8" text-anchor="middle" class="dl" fill="#15140f">0,14</text><text x="103.0" y="242" text-anchor="middle" class="ax">Oct</text><rect x="130.1" y="131.0" width="24.4" height="91.0" rx="3" fill="#d6cdb0"><title>Nov: 0,13</title></rect><text x="142.3" y="126.0" text-anchor="middle" class="dl" fill="#15140f">0,13</text><text x="142.3" y="242" text-anchor="middle" class="ax">Nov</text><rect x="169.5" y="125.2" width="24.4" height="96.8" rx="3" fill="#d6cdb0"><title>Dic: 0,14</title></rect><text x="181.7" y="120.2" text-anchor="middle" class="dl" fill="#15140f">0,14</text><text x="181.7" y="242" text-anchor="middle" class="ax">Dic</text><rect x="208.8" y="152.0" width="24.4" height="70.0" rx="3" fill="#b3841c"><title>Ene: 0,10</title></rect><text x="221.0" y="147.0" text-anchor="middle" class="dl" fill="#15140f">0,10</text><text x="221.0" y="242" text-anchor="middle" class="ax">Ene</text><rect x="248.1" y="151.6" width="24.4" height="70.4" rx="3" fill="#b3841c"><title>Feb: 0,10</title></rect><text x="260.3" y="146.6" text-anchor="middle" class="dl" fill="#15140f">0,10</text><text x="260.3" y="242" text-anchor="middle" class="ax">Feb</text><rect x="287.5" y="157.5" width="24.4" height="64.5" rx="3" fill="#b3841c"><title>Mar: 0,09</title></rect><text x="299.7" y="152.5" text-anchor="middle" class="dl" fill="#15140f">0,09</text><text x="299.7" y="242" text-anchor="middle" class="ax">Mar</text><rect x="326.8" y="164.6" width="24.4" height="57.4" rx="3" fill="#b3841c"><title>Abr: 0,08</title></rect><text x="339.0" y="159.6" text-anchor="middle" class="dl" fill="#15140f">0,08</text><text x="339.0" y="242" text-anchor="middle" class="ax">Abr</text><rect x="366.1" y="160.5" width="24.4" height="61.5" rx="3" fill="#b3841c"><title>May: 0,09</title></rect><text x="378.3" y="155.5" text-anchor="middle" class="dl" fill="#15140f">0,09</text><text x="378.3" y="242" text-anchor="middle" class="ax">May</text><rect x="405.5" y="125.8" width="24.4" height="96.2" rx="3" fill="#b3841c"><title>Jun: 0,14</title></rect><text x="417.7" y="120.8" text-anchor="middle" class="dl" fill="#15140f">0,14</text><text x="417.7" y="242" text-anchor="middle" class="ax">Jun</text><rect x="444.8" y="84.2" width="24.4" height="137.8" rx="3" fill="#b3841c"><title>Jul: 0,20</title></rect><text x="457.0" y="79.2" text-anchor="middle" class="dl" fill="#15140f">0,20</text><text x="457.0" y="242" text-anchor="middle" class="ax">Jul</text><rect x="484.1" y="84.2" width="24.4" height="137.8" rx="3" fill="#b3841c"><title>Ago: 0,20</title></rect><text x="496.3" y="79.2" text-anchor="middle" class="dl" fill="#15140f">0,20</text><text x="496.3" y="242" text-anchor="middle" class="ax">Ago</text><rect x="523.5" y="65.2" width="24.4" height="156.8" rx="3" fill="#b3841c"><title>Sep*: 0,23</title></rect><text x="535.7" y="60.2" text-anchor="middle" class="dl" fill="#15140f">0,23</text><text x="535.7" y="242" text-anchor="middle" class="ax">Sep*</text><rect x="562.8" y="50.0" width="24.4" height="172.0" rx="3" fill="#b3841c"><title>Oct*: 0,25</title></rect><text x="575.0" y="45.0" text-anchor="middle" class="dl" fill="#15140f">0,25</text><text x="575.0" y="242" text-anchor="middle" class="ax">Oct*</text><rect x="602.1" y="96.6" width="24.4" height="125.4" rx="3" fill="#1c1b16"><title>Fijo: 0,18</title></rect><text x="614.3" y="91.6" text-anchor="middle" class="dl" fill="#15140f">0,18</text><text x="614.3" y="242" text-anchor="middle" class="ax">Fijo</text></svg>
+    <div class="legend"><span class="it"><span class="sw" style="background:#d6cdb0"></span>Facturas sep–dic 2025</span><span class="it"><span class="sw" style="background:#b3841c"></span>2026</span><span class="it"><span class="sw" style="background:#1c1b16"></span>Fijo supuesto</span></div>
+    <div class="tbl"><table style="min-width:520px">
+      <thead><tr><th>Comparación</th><th>Energía €/kWh</th><th>Fijo frente a eso</th><th>Al año (con imp.)</th></tr></thead>
+      <tbody>
+        <tr><td>Últimos 12 meses (sep 25 – ago 26)</td><td>0,128</td><td class="up">+41 %</td><td class="up">+10.900 €</td></tr>
+        <tr><td>Agosto 2026 (OMIE 122)</td><td>0,201</td><td class="dn">−10 %</td><td class="dn">−4.100 €</td></tr>
+        <tr><td>Septiembre 2026 (OMIE 144)</td><td>0,226</td><td class="dn">−20 %</td><td class="dn">−9.400 €</td></tr>
+        <tr><td>Octubre 2026, días 1–14 (OMIE 164)</td><td>0,248</td><td class="dn">−27 %</td><td class="dn">−13.900 €</td></tr>
+      </tbody></table></div>
+    <div class="callout">El «incremento» depende de con qué se compare. <b style="font-weight:600">Frente al último año, el fijo es +41 %</b>, porque de enero a mayo el indexado estuvo a 0,08–0,10 €/kWh. <b style="font-weight:600">Frente a lo que se paga hoy, es 27 % más barato</b>. El problema del indexado no es el nivel de hoy: es que el mercado lleva cinco meses subiendo (57 → 72 → 107 → 121 → 144 → 164 €/MWh en octubre).</div>
+  </div>
+</section>
+
+<section class="light pad" id="invierno">
+  <div class="wrap">
+    <div class="kicker">Hasta que llegue la primavera</div>
+    <h1 class="section"><span class="no">06 —</span> El invierno mes a mes: fijo contra indexado</h1>
+    <p style="margin-top:14px; max-width:700px;">Escenario base: cuarto trimestre cerca del OMIP (137 €/MWh de media) y 2027 con la curva de futuros (invierno 100–105, abril–mayo 72–75, verano 85). Octubre ya arranca a 164 €/MWh en los 14 primeros días y la madrugada, que es el P6 de Mini Mix, va más cara que la media (179 €/MWh).</p>
+    <div class="tbl"><table class="sm">
+      <thead><tr><th class="l">Mes</th><th>kWh</th><th>OMIE €/MWh</th><th>Energía €/kWh</th><th>Indexado</th><th>Fijo</th><th>Indexado − fijo</th><th>Acumulado</th></tr></thead>
+      <tbody><tr><td>Oct 26</td><td>12.630</td><td>160</td><td>0,244</td><td>3.919 €</td><td>2.906 €</td><td class='up'>+1.014 €</td><td class='up'>+1.014 €</td></tr><tr><td>Nov 26</td><td>11.748</td><td>130</td><td>0,209</td><td>3.130 €</td><td>2.703 €</td><td class='up'>+427 €</td><td class='up'>+1.441 €</td></tr><tr><td>Dic 26</td><td>12.132</td><td>125</td><td>0,204</td><td>3.144 €</td><td>2.791 €</td><td class='up'>+353 €</td><td class='up'>+1.793 €</td></tr><tr><td>Ene 27</td><td>12.079</td><td>105</td><td>0,181</td><td>2.777 €</td><td>2.779 €</td><td class='dn'>−2 €</td><td class='up'>+1.791 €</td></tr><tr><td>Feb 27</td><td>10.971</td><td>100</td><td>0,175</td><td>2.442 €</td><td>2.524 €</td><td class='dn'>−82 €</td><td class='up'>+1.709 €</td></tr><tr><td>Mar 27</td><td>11.997</td><td>90</td><td>0,164</td><td>2.495 €</td><td>2.760 €</td><td class='dn'>−265 €</td><td class='up'>+1.443 €</td></tr><tr><td>Abr 27</td><td>12.897</td><td>75</td><td>0,146</td><td>2.399 €</td><td>2.967 €</td><td class='dn'>−568 €</td><td class='up'>+875 €</td></tr><tr><td>May 27</td><td>13.713</td><td>72</td><td>0,143</td><td>2.491 €</td><td>3.155 €</td><td class='dn'>−664 €</td><td class='up'>+211 €</td></tr><tr><td>Jun 27</td><td>16.240</td><td>80</td><td>0,152</td><td>3.140 €</td><td>3.736 €</td><td class='dn'>−597 €</td><td class='dn'>−386 €</td></tr><tr><td>Jul 27</td><td>17.636</td><td>85</td><td>0,158</td><td>3.538 €</td><td>4.058 €</td><td class='dn'>−519 €</td><td class='dn'>−906 €</td></tr><tr><td>Ago 27</td><td>17.454</td><td>85</td><td>0,158</td><td>3.502 €</td><td>4.016 €</td><td class='dn'>−514 €</td><td class='dn'>−1.420 €</td></tr><tr><td>Sep 27</td><td>13.417</td><td>85</td><td>0,158</td><td>2.692 €</td><td>3.087 €</td><td class='dn'>−395 €</td><td class='dn'>−1.815 €</td></tr><tr class='tot'><td>12 meses</td><td>162.915</td><td>98</td><td>0,172</td><td>35.668 €</td><td>37.482 €</td><td class='dn'>−1.815 €</td><td></td></tr></tbody></table></div>
+    <div class="note">Costes de energía con impuesto eléctrico (5,11 %) e IVA (21 %). Diferencia en positivo: el indexado sale más caro ese mes. La potencia y el resto de la factura son iguales con los dos precios.</div>
+    <div class="chart-title">Diferencia acumulada indexado − fijo, según escenario (€)</div>
+    <svg viewBox="0 0 640 262" width="100%" role="img" aria-label="Diferencia acumulada indexado menos fijo"><line x1="54" x2="630" y1="211.6" y2="211.6" stroke="#e4dfce" stroke-width="1"/><text x="48" y="215.6" text-anchor="end" class="ax">-6.000</text><line x1="54" x2="630" y1="182.7" y2="182.7" stroke="#e4dfce" stroke-width="1"/><text x="48" y="186.7" text-anchor="end" class="ax">-4.000</text><line x1="54" x2="630" y1="153.9" y2="153.9" stroke="#e4dfce" stroke-width="1"/><text x="48" y="157.9" text-anchor="end" class="ax">-2.000</text><line x1="54" x2="630" y1="125.0" y2="125.0" stroke="#15140f" stroke-width="1.2"/><text x="48" y="129.0" text-anchor="end" class="ax">0</text><line x1="54" x2="630" y1="96.1" y2="96.1" stroke="#e4dfce" stroke-width="1"/><text x="48" y="100.1" text-anchor="end" class="ax">+2.000</text><line x1="54" x2="630" y1="67.3" y2="67.3" stroke="#e4dfce" stroke-width="1"/><text x="48" y="71.3" text-anchor="end" class="ax">+4.000</text><line x1="54" x2="630" y1="38.4" y2="38.4" stroke="#e4dfce" stroke-width="1"/><text x="48" y="42.4" text-anchor="end" class="ax">+6.000</text><text x="54.0" y="248" text-anchor="middle" class="ax">Oct</text><text x="106.4" y="248" text-anchor="middle" class="ax">Nov</text><text x="158.7" y="248" text-anchor="middle" class="ax">Dic</text><text x="211.1" y="248" text-anchor="middle" class="ax">Ene</text><text x="263.5" y="248" text-anchor="middle" class="ax">Feb</text><text x="315.8" y="248" text-anchor="middle" class="ax">Mar</text><text x="368.2" y="248" text-anchor="middle" class="ax">Abr</text><text x="420.5" y="248" text-anchor="middle" class="ax">May</text><text x="472.9" y="248" text-anchor="middle" class="ax">Jun</text><text x="525.3" y="248" text-anchor="middle" class="ax">Jul</text><text x="577.6" y="248" text-anchor="middle" class="ax">Ago</text><text x="630.0" y="248" text-anchor="middle" class="ax">Sep</text><polyline points="54.0,111.7 106.4,109.3 158.7,109.3 211.1,114.4 263.5,120.2 315.8,129.1 368.2,142.8 420.5,158.2 472.9,173.6 525.3,188.6 577.6,203.3 630.0,214.7" fill="none" stroke="#4d7a3a" stroke-width="2.4"/><circle cx="630.0" cy="214.7" r="4" fill="#4d7a3a"/><text x="624.0" y="230.7" text-anchor="end" class="dl" fill="#4d7a3a">Relajado −6.220 €</text><polyline points="54.0,110.4 106.4,104.2 158.7,99.1 211.1,99.2 263.5,100.3 315.8,104.2 368.2,112.4 420.5,122.0 472.9,130.6 525.3,138.1 577.6,145.5 630.0,151.2" fill="none" stroke="#b3841c" stroke-width="2.4"/><circle cx="630.0" cy="151.2" r="4" fill="#b3841c"/><text x="624.0" y="142.2" text-anchor="end" class="dl" fill="#b3841c">Base −1.810 €</text><polyline points="54.0,109.0 106.4,89.2 158.7,66.2 211.1,58.6 263.5,52.9 315.8,49.1 368.2,49.1 420.5,50.0 472.9,48.4 525.3,44.7 577.6,41.1 630.0,38.3" fill="none" stroke="#a8321e" stroke-width="2.4"/><circle cx="630.0" cy="38.3" r="4" fill="#a8321e"/><text x="624.0" y="29.3" text-anchor="end" class="dl" fill="#a8321e">Tenso +6.010 €</text><text x="58" y="28" class="ax">Indexado pierde frente al fijo ↑</text><text x="58" y="222" class="ax">↓ Indexado gana frente al fijo</text></svg>
+    <div class="legend"><span class="it"><span class="sw" style="background:#4d7a3a"></span>Relajado</span><span class="it"><span class="sw" style="background:#b3841c"></span>Base</span><span class="it"><span class="sw" style="background:#a8321e"></span>Tensionado</span></div>
+    <h3>Qué podemos encontrar de octubre a marzo</h3>
+    <div class="tbl"><table class="sm">
+      <thead><tr><th class="l">Mes</th><th>Relajado: OMIE · €/kWh</th><th>Indexado</th><th>Base: OMIE · €/kWh</th><th>Indexado</th><th>Tensionado: OMIE · €/kWh</th><th>Indexado</th><th>Fijo</th></tr></thead>
+      <tbody><tr><td>Oct 26</td><td>155 · 0,238</td><td>3.827 €</td><td>160 · 0,244</td><td>3.919 €</td><td>165 · 0,250</td><td>4.012 €</td><td>2.906 €</td></tr><tr><td>Nov 26</td><td>115 · 0,192</td><td>2.872 €</td><td>130 · 0,209</td><td>3.130 €</td><td>185 · 0,273</td><td>4.075 €</td><td>2.703 €</td></tr><tr><td>Dic 26</td><td>105 · 0,181</td><td>2.789 €</td><td>125 · 0,204</td><td>3.144 €</td><td>195 · 0,284</td><td>4.386 €</td><td>2.791 €</td></tr><tr><td>Ene 27</td><td>85 · 0,158</td><td>2.423 €</td><td>105 · 0,181</td><td>2.777 €</td><td>135 · 0,215</td><td>3.307 €</td><td>2.779 €</td></tr><tr><td>Feb 27</td><td>80 · 0,152</td><td>2.121 €</td><td>100 · 0,175</td><td>2.442 €</td><td>130 · 0,209</td><td>2.923 €</td><td>2.524 €</td></tr><tr><td>Mar 27</td><td>70 · 0,141</td><td>2.144 €</td><td>90 · 0,164</td><td>2.495 €</td><td>120 · 0,198</td><td>3.021 €</td><td>2.760 €</td></tr></tbody></table></div>
+    <div class="twocol" style="margin-top:26px;">
+      <div class="col"><p><b style="font-weight:600">Lo seguro.</b> Octubre y noviembre van caros: con la madrugada en 179 €/MWh, el P6 de Mini Mix sube más que la media. Aunque pase el pico, el indexado sale por encima del fijo todos los meses hasta diciembre en el escenario base, y en enero queda igual.</p></div>
+      <div class="col"><p><b style="font-weight:600">Lo que decide el invierno.</b> Según el informe de mercado, un invierno frío con Ormuz cerrado sería 172–189 €/MWh de media; templado con Ormuz abierto, 101–112. Entre uno y otro hay unos 5.500 € en los seis meses de octubre a marzo.</p></div>
     </div>
   </div>
+</section>
 
-  <div class="callout">
-    <div style="font-size:18px;">💡</div>
-    <p><strong>Ahorro frente al Actual: 469,56 € al año (−1,78%).</strong> Ahorro modesto: P1 y P2 de la propuesta quedan por encima del precio actual (+38% y +20%), compensado en parte por P3-P6.</p>
-  </div>
-</div>
-
-<!-- ══════ COMPARATIVA 2: FIJO ANTERIOR vs PROPUESTA ══════ -->
-<div class="page">
-  <div class="page-header">
-    <span>Ingedás · Estudio de Electricidad</span>
-    <span>Comparativa 2 · Fijo Anterior</span>
-  </div>
-  <h1 class="page-title">Comparativa 2<br>Fijo Anterior vs. Propuesta</h1>
-
-  <p>Comparativa frente al <strong>contrato de precio fijo de junio 2024 a junio 2025</strong> (0,119 €/kWh en todos los periodos, potencia BOE 2024-2025).</p>
-
-  <div class="comparador-grid">
-    <div class="comp-col current">
-      <div class="comp-col-header">
-        Fijo Anterior (jun 2024 – jun 2025)
-        <div class="brand">Precio fijo 0,119 €/kWh</div>
-      </div>
-      <div class="comp-body">
-        <div class="comp-section-title">Término de Potencia · 365 días · 43,6 kW</div>
-        <div class="comp-row"><span class="period">Tp1</span><span class="rate">0,054959 €/kW·día</span><span class="amount">874,62 €</span></div>
-        <div class="comp-row"><span class="period">Tp2</span><span class="rate">0,029180 €/kW·día</span><span class="amount">464,37 €</span></div>
-        <div class="comp-row"><span class="period">Tp3</span><span class="rate">0,012776 €/kW·día</span><span class="amount">203,32 €</span></div>
-        <div class="comp-row"><span class="period">Tp4</span><span class="rate">0,011187 €/kW·día</span><span class="amount">178,03 €</span></div>
-        <div class="comp-row"><span class="period">Tp5</span><span class="rate">0,018228 €/kW·día</span><span class="amount">290,08 €</span></div>
-        <div class="comp-row"><span class="period">Tp6</span><span class="rate">0,015572 €/kW·día</span><span class="amount">247,81 €</span></div>
-        <div class="comp-subtotal"><span>Subtotal Potencia</span><span>2.258,23 €</span></div>
-        <div class="comp-section-title">Término de Energía</div>
-        <div class="comp-row"><span class="period">Te1</span><span class="rate">15.538 kWh · 0,1190</span><span class="amount">1.849,02 €</span></div>
-        <div class="comp-row"><span class="period">Te2</span><span class="rate">18.625 kWh · 0,1190</span><span class="amount">2.216,38 €</span></div>
-        <div class="comp-row"><span class="period">Te3</span><span class="rate">18.794 kWh · 0,1190</span><span class="amount">2.236,49 €</span></div>
-        <div class="comp-row"><span class="period">Te4</span><span class="rate">22.251 kWh · 0,1190</span><span class="amount">2.647,87 €</span></div>
-        <div class="comp-row"><span class="period">Te5</span><span class="rate">8.809 kWh · 0,1190</span><span class="amount">1.048,27 €</span></div>
-        <div class="comp-row"><span class="period">Te6</span><span class="rate">74.531 kWh · 0,1190</span><span class="amount">8.869,19 €</span></div>
-        <div class="comp-subtotal"><span>Subtotal Energía</span><span>18.867,21 €</span></div>
-        <div class="comp-section-title">Otros conceptos</div>
-        <div class="comp-extra-row"><span style="font-weight:600;">Base Imponible</span><span style="font-weight:600;">21.125,44 €</span></div>
-        <div class="comp-extra-row"><span>IEE (5,1127%)</span><span>1.080,08 €</span></div>
-        <div class="comp-extra-row"><span>IVA (21%)</span><span>4.663,16 €</span></div>
-      </div>
-      <div class="comp-total"><span>Total Anual</span><span>26.868,68 €</span></div>
+<section class="dark pad" id="escenarios">
+  <div class="wrap">
+    <div class="kicker">Escenarios hasta septiembre de 2027</div>
+    <h1 class="section" style="color:#fff;"><span class="no">07 —</span> Fijo o indexado: tres escenarios hasta septiembre de 2027</h1>
+    <p style="margin-top:8px; color:#a29f90; font-size:.86rem;">Mismo consumo que el último año. El fijo cuesta 37.480 € en los tres casos; el indexado cambia con el mercado.</p>
+    <div class="bigstats">
+      <div class="row"><div class="num">31.270 €</div><div class="desc"><b style="color:#fff;font-weight:600">Mercado relajado</b> · invierno templado y Ormuz abierto: cuarto trimestre ≈ 125 €/MWh y 2027 unos 20 por debajo de los futuros · <span style="color:var(--gold)">6.217 € menos que con el fijo</span></div></div>
+      <div class="row"><div class="num">35.670 €</div><div class="desc"><b style="color:#fff;font-weight:600">Base: se cumplen los futuros</b> · cuarto trimestre ≈ 138 €/MWh y 2027 con la curva del OMIP · <span style="color:var(--gold)">1.815 € menos que con el fijo</span></div></div>
+      <div class="row"><div class="num">43.490 €</div><div class="desc"><b style="color:#fff;font-weight:600">Mercado tensionado</b> · frío y Ormuz cerrado: cuarto trimestre ≈ 182 €/MWh y 2027 unos 30 por encima de los futuros · <span style="color:var(--gold)">6.011 € más que con el fijo</span></div></div>
     </div>
+    <div class="headlines">
+      <div class="h">El empate está en un <b style="color:var(--gold);font-weight:600">OMIE medio de 105 €/MWh</b> durante los 12 meses. Los futuros ponderados por el consumo dan 97: la diferencia son los 8 €/MWh de prima que se ha supuesto en el fijo.</div>
+      <div class="h">Alternativa intermedia: <b style="color:var(--gold);font-weight:600">seguir indexado hasta marzo y fijar en abril</b> a unos 89 €/MWh. Frente al fijo de hoy: −2.500 € (relajado), −700 € (base) y +3.100 € (tensionado). Renuncia a parte del ahorro, pero deja de depender del mercado en verano.</div>
+      <div class="h">Con un reparto de probabilidades de 25 / 40 / 35 % el resultado esperado del indexado es −200 € frente al fijo. La cola mala pesa casi lo mismo que la buena.</div>
+      <div class="h">Octubre ya apunta hacia arriba: los 14 primeros días van a 164 €/MWh frente a los 137 del OMIP de finales de septiembre. Si el cuarto trimestre acaba en 150, el escenario base se desplaza unos 640 € a favor del fijo.</div>
+    </div>
+    <p style="margin-top:22px; color:#a29f90; font-size:.78rem; line-height:1.6;">Método: energía = OMIE × 1,15 (pérdidas) + 60 €/MWh (margen, peajes y cargos de energía, calibrados con las facturas de Axpo de junio a agosto de 2026), × kWh de cada mes × 1,0511 (impuesto eléctrico) × 1,21 (IVA). El fijo es el OMIE ponderado de los futuros (cuarto trimestre a 137 €/MWh y 2027 con media de 88; invierno 95–105, verano 80–85) más 8 €/MWh de prima, con el mismo margen. El reparto mes a mes de 2027 y los escenarios son hipótesis, no una previsión cerrada; la oferta real de fijo cambia el resultado: cada €/MWh de diferencia son 238 €.</p>
+    <a class="backtop" href="#top">↑ volver arriba</a>
+  </div>
+</section>
 
-    <div class="comp-col proposed">
-      <div class="comp-col-header">
-        Propuesta Ingedás
-        <div class="brand">Precio fijo · Permanencia 12 meses</div>
-      </div>
-      <div class="comp-body">
-        <div class="comp-section-title">Término de Potencia · 365 días · 43,6 kW (BOE)</div>
-        <div class="comp-row"><span class="period">Tp1</span><span class="rate">0,055827 €/kW·día</span><span class="amount">888,43 €</span></div>
-        <div class="comp-row"><span class="period">Tp2</span><span class="rate">0,029089 €/kW·día</span><span class="amount">462,92 €</span></div>
-        <div class="comp-row"><span class="period">Tp3</span><span class="rate">0,012278 €/kW·día</span><span class="amount">195,39 €</span></div>
-        <div class="comp-row"><span class="period">Tp4</span><span class="rate">0,010647 €/kW·día</span><span class="amount">169,44 €</span></div>
-        <div class="comp-row"><span class="period">Tp5</span><span class="rate">0,006887 €/kW·día</span><span class="amount">109,60 €</span></div>
-        <div class="comp-row"><span class="period">Tp6</span><span class="rate">0,003951 €/kW·día</span><span class="amount">62,88 €</span></div>
-        <div class="comp-subtotal proposed-st"><span>Subtotal Potencia</span><span>1.888,66 €</span></div>
-        <div class="comp-section-title">Término de Energía (precio fijo por periodo)</div>
-        <div class="comp-row"><span class="period">Te1</span><span class="rate">15.538 kWh · 0,1838</span><span class="amount">2.855,88 €</span></div>
-        <div class="comp-row"><span class="period">Te2</span><span class="rate">18.625 kWh · 0,1485</span><span class="amount">2.765,81 €</span></div>
-        <div class="comp-row"><span class="period">Te3</span><span class="rate">18.794 kWh · 0,1185</span><span class="amount">2.227,09 €</span></div>
-        <div class="comp-row"><span class="period">Te4</span><span class="rate">22.251 kWh · 0,1085</span><span class="amount">2.414,23 €</span></div>
-        <div class="comp-row"><span class="period">Te5</span><span class="rate">8.809 kWh · 0,0935</span><span class="amount">823,64 €</span></div>
-        <div class="comp-row"><span class="period">Te6</span><span class="rate">74.531 kWh · 0,0985</span><span class="amount">7.341,30 €</span></div>
-        <div class="comp-subtotal proposed-st"><span>Subtotal Energía</span><span>18.427,96 €</span></div>
-        <div class="comp-section-title">Otros conceptos</div>
-        <div class="comp-extra-row"><span style="font-weight:600;">Base Imponible</span><span style="font-weight:600;">20.316,62 €</span></div>
-        <div class="comp-extra-row"><span>IEE (5,1127%)</span><span>1.038,73 €</span></div>
-        <div class="comp-extra-row"><span>IVA (21%)</span><span>4.484,62 €</span></div>
-      </div>
-      <div class="comp-total"><span>Total Anual</span><span>25.839,97 €</span></div>
+<!-- 05 RECOMENDACIONES -->
+<section class="light pad" id="recomendaciones" style="background:var(--paper2); padding-bottom:0;">
+  <div class="wrap" style="padding-bottom:56px;">
+    <div class="kicker">Cierre</div>
+    <h1 class="section"><span class="no">08 —</span> Recomendaciones</h1>
+    <h3>Situación contractual</h3>
+    <div class="tbl" style="margin-top:0"><table style="min-width:520px">
+      <thead><tr><th>Suministros</th><th>Comercializadora</th><th>Precio</th><th>Vigencia</th></tr></thead>
+      <tbody>
+        <tr><td>19 en 3.0TD</td><td>Apolo Energía</td><td>Fijo</td><td>16/07/2026 → 16/07/2027</td></tr>
+        <tr><td>2 en 3.0TD de Mini Mix (Léganes, Móstoles)</td><td>Apolo Energía</td><td class="up">Indexado</td><td>11/09/2026 → 11/09/2027</td></tr>
+        <tr><td>12 en 2.0TD (Anna N., Yulia N., Tatiana N., Kuzbass, Mini Mix)</td><td>Gaolania</td><td>Fijo</td><td class="up">Vencidos el 15–20/09/2026</td></tr>
+      </tbody></table></div>
+    <div class="watch-list">
+      <div class="watch-item"><div class="watch-no">1</div><div class="watch-tx"><b>Mini Mix: seguir en indexado este invierno, con un tope definido</b>En el escenario base el indexado gana 1.815 € en 12 meses y el riesgo está acotado: el peor caso, 6.011 €, es un 1,8 % del gasto del grupo, que ya tiene el 75 % de su energía a precio fijo hasta julio de 2027. El fijo de hoy solo compensa si la oferta real queda por debajo de unos 0,172–0,181 €/kWh de energía.</div></div>
+      <div class="watch-item"><div class="watch-no">2</div><div class="watch-tx"><b>Fijar si se cumple una de estas señales</b>OMIE mensual de noviembre o diciembre por encima de 190 €/MWh, OMIP del segundo y tercer trimestre de 2027 por encima de 95 €/MWh, o confirmación de Ormuz cerrado. En ese caso se pide fijo a Apolo y se firma sin esperar a la primavera. Revisar a primeros de diciembre, de marzo y de abril.</div></div>
+      <div class="watch-item"><div class="watch-no">3</div><div class="watch-tx"><b>Pedir a Apolo la oferta de fijo ya, aunque no se firme</b>Con precio por periodos a 12 meses para Léganes y Móstoles, y la condición del contrato indexado actual: si permite pasar a fijo antes del 11/09/2027 y con qué penalización. Sin esa cláusula, la opción de «fijar en abril» deja de existir.</div></div>
+      <div class="watch-item"><div class="watch-no">4</div><div class="watch-tx"><b>Renovar los 12 suministros de 2.0TD en bloque</b>Suman ≈ 52.000 € al año y sus contratos con Gaolania vencieron en septiembre. Lo peor sería una renovación tácita sin mirar: pedir condiciones, comparar y firmar todos juntos para negociar mejor.</div></div>
+      <div class="watch-item"><div class="watch-no">5</div><div class="watch-tx"><b>Calendario del fijo de Apolo</b>El fijo caduca el 16/07/2027. Empezar a negociar en el primer trimestre de 2027 con los futuros de 2027 (≈ 88 €/MWh) como referencia, y poner una alerta de 90 días antes para evitar otra renovación tácita como la de Wind to Market en Barcelona y Platja d'Aro.</div></div>
+      <div class="watch-item"><div class="watch-no">6</div><div class="watch-tx"><b>Mover consumo a mediodía solo donde hay indexado</b>En los dos suministros de Mini Mix, una hora de mediodía laborable (11–16 h) cuesta en septiembre entre 24 y 49 €/MWh frente a 179–211 de madrugada. Desplazar al mediodía el 10 % de su consumo (unos 16 MWh al año) supone ≈ 3.700 € al año a precios de septiembre. Hay que mirar qué es movible: precalentar o pre-enfriar cámaras, hornos, lavados, cargas de equipos. Con fijo por periodos, en cambio, P6 sigue siendo el más barato y desplazar no compensa.</div></div>
+      <div class="watch-item"><div class="watch-no">7</div><div class="watch-tx"><b>Estudiar autoconsumo en los cinco mayores</b>Tienen el 36 % de la energía del grupo y consumo diurno constante. Con una instalación dimensionada al 40 % de la demanda anual y un 90 % de autoconsumo, el ahorro bruto de energía ronda los 26.000 € al año entre los cinco. Es una estimación a 0,12 €/kWh evitado; falta ver cubiertas y curva horaria.
+        <div class="tbl" style="margin-top:12px;"><table style="min-width:440px"><thead><tr><th class="l">Suministro</th><th>MWh/año</th><th>Potencia orientativa</th><th>Ahorro bruto/año</th></tr></thead><tbody><tr><td class='l'>Llorenç del Penedès · Monolith Norte</td><td>164</td><td>≈ 45 kWp</td><td>≈ 7.100 €</td></tr><tr><td class='l'>Torrevieja · Kuzbass</td><td>122</td><td>≈ 34 kWp</td><td>≈ 5.300 €</td></tr><tr><td class='l'>Mejorada del Campo · Monolith Norte</td><td>111</td><td>≈ 30 kWp</td><td>≈ 4.800 €</td></tr><tr><td class='l'>Léganes · Mini Mix</td><td>110</td><td>≈ 30 kWp</td><td>≈ 4.800 €</td></tr><tr><td class='l'>La Nucía · Monolith Sur</td><td>100</td><td>≈ 28 kWp</td><td>≈ 4.300 €</td></tr></tbody></table></div></div></div>
+      <div class="watch-item"><div class="watch-no">8</div><div class="watch-tx"><b>Potencias y excesos</b>La Nucía (Monolith Sur) tiene 30 kW en P1, 36 en P2–P5 y 43 en P6 y paga 205 € de excesos, 199 € solo en julio: ver si subir P1–P5. Alcalá de Henares (Mini Mix) tiene registrada una potencia de 1,039 kW con 50 MWh anuales y 285 € de excesos en cuatro meses: casi seguro hay que corregir el dato de contrato. Con muy poco consumo por kW contratado: Mejorada del Campo (20,7 kW, 319 kWh/kW), Cartagena (17,0 kW, 1.906 kWh/kW), Orihuela (15,0 kW, 2.154 kWh/kW), La Nucía (16,2 kW, 2.237 kWh/kW); la mediana del grupo en 3.0TD es de 3.059 kWh/kW. Pedir la curva cuartohoraria para ajustar la potencia por periodo.</div></div>
+      <div class="watch-item"><div class="watch-no">9</div><div class="watch-tx"><b>Reactiva: batería de condensadores en seis puntos</b>Se pagan 2.771 € al año y solo seis suministros concentran el 98 %: Llorenç del Penedès (743 €, 10 de 13 facturas), Alicante (601 €), Léganes (503 €), La Nucía-Monolith (422 €), Móstoles (297 €) y Torrevieja-Kuzbass (163 €). Un recargo recurrente es señal de baja compensación; medir el cos φ y presupuestar baterías.</div></div>
+      <div class="watch-item"><div class="watch-no">+</div><div class="watch-tx"><b>Otras observaciones de las facturas</b>Los fijos de agosto con Apolo se han disparado respecto a julio (325 € por suministro frente a 199) mientras la energía por kWh se mantiene: confirmar con Apolo qué partidas incluye (Platja d'Aro pasó de 110 € habituales a 855 €). En diciembre de 2025, con la entrada de Axpo, varios suministros recibieron dos facturas en el mismo mes.</div></div>
     </div>
   </div>
-
-  <div class="callout">
-    <div style="font-size:18px;">💡</div>
-    <p><strong>Ahorro frente al Fijo Anterior: 1.028,71 € al año (−3,83%).</strong> Además de energía más barata en P3–P6, la potencia BOE 2026 es inferior a la de 2024-2025 en P5 y P6.</p>
-  </div>
-</div>
-
-<!-- ══════ RESUMEN AHORRO ══════ -->
-<div class="page">
-  <div class="page-header">
-    <span>Ingedás · Estudio de Electricidad</span>
-    <span>Resumen de Ahorro</span>
-  </div>
-  <h1 class="page-title">Resumen<br>Comparativo</h1>
-
-  <div class="ahorro-section">
-    <div class="ahorro-item">
-      <div class="ahorro-label">Ahorro vs. Actual (25-26)</div>
-      <div class="ahorro-value">470 €</div>
-      <div class="ahorro-sub">−1,78% · anual</div>
-    </div>
-    <div class="ahorro-item">
-      <div class="ahorro-label">Ahorro vs. Fijo Anterior (24-25)</div>
-      <div class="ahorro-value">1.029 €</div>
-      <div class="ahorro-sub">−3,83% · anual</div>
+  <div class="backband">
+    <div class="wrap inner">
+      <div class="bg">INGEDÁS</div>
+      <div class="bt">Servicios Ingedás S.L. — Orihuela, Alicante<br>Análisis de precios y consumos de clientes</div>
     </div>
   </div>
-
-  <h2 class="section-title">Comparativa Visual</h2>
-
-  <div class="visual-compare">
-    <div class="vis-row">
-      <div class="vis-label">Fijo Anterior 24-25</div>
-      <div class="vis-bar-wrap">
-        <div class="vis-bar fijo-bar" style="width:100%;">26.868,68 €</div>
-      </div>
-      <div style="width:70px;"></div>
-    </div>
-    <div class="vis-row">
-      <div class="vis-label">Actual 25-26</div>
-      <div class="vis-bar-wrap">
-        <div class="vis-bar current-bar" style="width:97.9%;">26.309,53 €</div>
-      </div>
-      <div style="width:70px;"></div>
-    </div>
-    <div class="vis-row">
-      <div class="vis-label">Propuesta Ingedás</div>
-      <div class="vis-bar-wrap">
-        <div class="vis-bar proposed-bar" style="width:96.2%;">25.839,97 €</div>
-      </div>
-      <div class="vis-saving-pill">−3,8%</div>
-    </div>
-  </div>
-
-  <p style="font-size:11px;color:#999;">* Todos los importes incluyen potencia + energía + IEE (5,1127%) + IVA (21%), sobre consumo anual de 158.548 kWh y 43,6 kW contratados.</p>
-
-  <hr class="divider">
-
-  <h2 class="section-title">Próximos Pasos</h2>
-
-  <div class="steps-grid">
-    <div class="step-card">
-      <div class="step-num">1</div>
-      <div class="step-text"><strong>Confirmar la propuesta</strong><span>Comunicar a Ingedás la aceptación antes del 31 de julio de 2026.</span></div>
-    </div>
-    <div class="step-card">
-      <div class="step-num">2</div>
-      <div class="step-text"><strong>Firma del contrato</strong><span>Proceso 100% digital. Sin desplazamientos. Precio fijo 12 meses garantizado.</span></div>
-    </div>
-    <div class="step-card">
-      <div class="step-num">3</div>
-      <div class="step-text"><strong>Cambio sin corte de suministro</strong><span>La comercializadora cambia sin interrupciones. El proceso tarda 15–30 días hábiles.</span></div>
-    </div>
-    <div class="step-card">
-      <div class="step-num">4</div>
-      <div class="step-text"><strong>Primera factura con ahorro</strong><span>A partir del siguiente ciclo de facturación empiezas a notar la diferencia.</span></div>
-    </div>
-  </div>
-
-  <div class="callout">
-    <div style="font-size:18px;">📞</div>
-    <p><strong>¿Tienes dudas?</strong> Contacta con nosotros en <strong>administracion@ingedas.es</strong> · <strong>www.ingedas.com</strong> · <strong>626 119 254</strong>. Estaremos encantados de explicarte cada punto del estudio.</p>
-  </div>
-</div>
-
-<!-- ══════ FOOTER ══════ -->
-<footer>
-  <div>
-    <div class="brand">Ingedás · Servicios Ingedás, S.L</div>
-    <div style="margin-top:4px;">Avda. Del Mar 10 · 03300 Orihuela (Alicante) · B06816938</div>
-    <div style="margin-top:2px;">administracion@ingedas.es · www.ingedas.com · 626 119 254</div>
-  </div>
-  <div class="validity">
-    <div>Estudio emitido el 15/7/2026</div>
-    <div style="margin-top:4px;color:var(--yellow);">Válido hasta el 31/7/2026</div>
-    <div style="margin-top:8px;font-size:10px;color:#444;">Documento confidencial · uso exclusivo del destinatario</div>
-  </div>
-</footer>
+</section>
 
 </body>
 </html>
